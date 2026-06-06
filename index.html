@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cao Doãn Lợi | Digital Portfolio cá nhân</title>
+    <meta name="description" content="Digital Portfolio cá nhân của Cao Doãn Lợi - Sinh viên Khoa Công nghệ thông tin, Trường Đại học Công nghệ, ĐHQGHN cho môn Nhập môn Công nghệ số & Ứng dụng AI.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        /* Specific Styles for Index Page */
+        .hero {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .hero-img-container {
+            position: relative;
+            width: 380px;
+            height: 380px;
+            margin: 0 auto;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-premium);
+            border: 1px solid var(--border-color);
+        }
+
+        .hero-img-container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent, rgba(11, 15, 25, 0.4));
+            z-index: 1;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+        }
+
+        .hero-img-container:hover .hero-img {
+            transform: scale(1.05);
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-title-greeting {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 12px;
+        }
+
+        .hero-name {
+            font-size: 56px;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-role {
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hero-role::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--color-primary);
+        }
+
+        .hero-desc {
+            color: var(--text-muted);
+            font-size: 16px;
+            margin-bottom: 32px;
+            max-width: 540px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        /* Objectives Section */
+        .objectives {
+            padding: 80px 0;
+            background: rgba(17, 24, 39, 0.4);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 56px;
+        }
+
+        .section-subtitle {
+            color: var(--color-primary);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        .section-title {
+            font-size: 36px;
+        }
+
+        .objective-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: var(--transition-smooth);
+        }
+
+        .objective-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(16, 185, 129, 0.3);
+            box-shadow: var(--shadow-premium);
+        }
+
+        .objective-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--color-primary-glow);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: var(--color-primary);
+        }
+
+        .objective-card-secondary .objective-icon {
+            background: var(--color-secondary-glow);
+            color: var(--color-secondary);
+        }
+
+        .objective-card-secondary:hover {
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .objective-title {
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        .objective-list {
+            list-style: none;
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        .objective-list li {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .objective-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--color-primary);
+        }
+
+        .objective-card-secondary .objective-list li::before {
+            color: var(--color-secondary);
+        }
+
+        /* Learning Timeline */
+        .timeline-section {
+            padding: 80px 0;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 24px;
+            width: 16px;
+            height: 16px;
+            background: var(--bg-main);
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            transition: var(--transition-smooth);
+        }
+
+        .timeline-item:hover .timeline-dot {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 10px var(--color-primary);
+            background: var(--color-primary);
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: 12px;
+            position: relative;
+            transition: var(--transition-smooth);
+        }
+
+        .timeline-item:hover .timeline-content {
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .timeline-date {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .timeline-title {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-img-container {
+                width: 280px;
+                height: 280px;
+            }
+            .hero-name {
+                font-size: 40px;
+            }
+            .timeline::before {
+                left: 16px;
+            }
+            .timeline-item {
+                flex-direction: row !important;
+                margin-bottom: 30px;
+            }
+            .timeline-dot {
+                left: 16px;
+            }
+            .timeline-content {
+                width: calc(100% - 48px);
+                margin-left: 48px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Nav -->
+    <header class="header" id="header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">CDL.Portfolio</a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link active">Trang chủ</a></li>
+                <li><a href="projects.html" class="nav-link">Dự án</a></li>
+                <li><a href="reflection.html" class="nav-link">Tổng kết</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        
+        <!-- Hero Section -->
+        <section class="hero reveal active">
+            <div class="container grid-2">
+                <div class="hero-content">
+                    <span class="hero-title-greeting">Xin chào, tôi là</span>
+                    <h1 class="hero-name">Cao Doãn Lợi</h1>
+                    <div class="hero-role">Sinh viên Công nghệ thông tin</div>
+                    <p class="hero-desc">
+                        Chào mừng bạn đến với Digital Portfolio cá nhân của tôi. Đây là nơi tôi lưu trữ, hệ thống hóa và trình bày các sản phẩm bài tập thực hành trong môn học <strong>Nhập môn Công nghệ số và Ứng dụng Trí tuệ nhân tạo</strong> (Trường Đại học Công nghệ - ĐHQGHN). Qua dự án này, tôi muốn thể hiện kỹ năng thực hành công nghệ số và sự phát triển tư duy của mình.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="projects.html" class="btn btn-primary">
+                            Xem các bài tập
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </a>
+                        <a href="reflection.html" class="btn btn-secondary">Đọc tổng kết</a>
+                    </div>
+                </div>
+                <div class="hero-img-box">
+                    <div class="hero-img-container">
+                        <img src="assets/avatar.png" alt="Cao Doãn Lợi - Sinh viên IT" class="hero-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Objectives Section -->
+        <section class="objectives">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-subtitle">Mục tiêu & Tầm nhìn</span>
+                    <h2 class="section-title">Khám phá Mục tiêu Dự án</h2>
+                </div>
+                <div class="grid-2 reveal">
+                    <!-- Learning Objectives Card -->
+                    <div class="objective-card">
+                        <div class="objective-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        </div>
+                        <h3 class="objective-title">Mục tiêu học tập</h3>
+                        <ul class="objective-list">
+                            <li>Làm chủ các công cụ và nền tảng số hóa thiết yếu phục vụ học tập, nghiên cứu và làm việc nhóm trực tuyến.</li>
+                            <li>Khai thác và ứng dụng hiệu quả, có trách nhiệm các công cụ Trí tuệ nhân tạo (AI tạo sinh) vào học tập.</li>
+                            <li>Phát triển năng lực tư duy thuật toán, kỹ năng lập trình (Python/Java OOP) và thiết kế hệ thống phần mềm.</li>
+                            <li>Nâng cao kỹ năng nghiên cứu độc lập, chọn lọc và đánh giá khách quan các nguồn thông tin khoa học.</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Portfolio Objectives Card -->
+                    <div class="objective-card objective-card-secondary">
+                        <div class="objective-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                        </div>
+                        <h3 class="objective-title">Mục tiêu của Portfolio</h3>
+                        <ul class="objective-list">
+                            <li>Tổng hợp và trưng bày toàn bộ 6 sản phẩm bài tập thực hành môn học một cách trực quan, khoa học.</li>
+                            <li>Minh chứng năng lực phát triển bản thân và tự hoàn thiện kỹ năng qua từng chặng học tập.</li>
+                            <li>Tạo dựng một sản phẩm web thực tế không sử dụng framework, thể hiện kỹ năng lập trình Front-end cơ bản (HTML5/CSS3/JS).</li>
+                            <li>Lưu trữ làm tài liệu tham khảo cho các học phần tiếp theo trong lộ trình đào tạo Công nghệ thông tin.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Study Timeline Section -->
+        <section class="timeline-section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-subtitle">Chặng đường đi qua</span>
+                    <h2 class="section-title">Hành trình 6 Bài thực hành</h2>
+                </div>
+                
+                <div class="timeline reveal">
+                    
+                    <!-- Item 1 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">Bài 1</div>
+                            <h3 class="timeline-title">Thao tác Tệp tin & Thư mục</h3>
+                            <p class="timeline-desc">Thực hành các kỹ năng quản lý hệ thống tệp tin trên Windows File Explorer, tổ chức dữ liệu cá nhân tối ưu.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Item 2 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">Bài 2</div>
+                            <h3 class="timeline-title">Tìm kiếm Học thuật</h3>
+                            <p class="timeline-desc">Xây dựng bộ từ khóa và rà soát 11 tài liệu uy tín (IEEE/ACM) về dự đoán lỗi phần mềm tự động bằng học sâu.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Item 3 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">Bài 3</div>
+                            <h3 class="timeline-title">Lập trình cùng AI (Prompting)</h3>
+                            <p class="timeline-desc">Ứng dụng ChatGPT và Gemini thiết lập script Python mô phỏng phép biến đổi tuyến tính hình học không gian 2D.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Item 4 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">Bài 4</div>
+                            <h3 class="timeline-title">Hợp tác Nhóm trực tuyến</h3>
+                            <p class="timeline-desc">Vận dụng Trello, Google Drive và Discord để thiết lập dự án nhóm, giải quyết các xung đột làm việc cộng tác.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Item 5 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">Bài 5</div>
+                            <h3 class="timeline-title">Sáng tạo nội dung với AI</h3>
+                            <p class="timeline-desc">Viết bài Tech Blog về cấu trúc Java OOP đấu giá trên Canva. Phản biện lỗi kế thừa sai lầm của AI (Composition vs Inheritance).</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Item 6 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">Bài 6</div>
+                            <h3 class="timeline-title">Sử dụng AI có trách nhiệm</h3>
+                            <p class="timeline-desc">Nghiên cứu chính sách liêm chính học thuật, viết luận tác động của AI đến tự học và lập bộ nguyên tắc 6 Có - 6 Không.</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo-desc">
+                    <a href="index.html" class="logo">CDL.Portfolio</a>
+                    <p class="footer-desc">
+                        Bài tập dự án cá nhân môn học Nhập môn Công nghệ số và Ứng dụng Trí tuệ nhân tạo. Được xây dựng hoàn toàn bằng HTML, CSS và JavaScript thuần.
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html" class="footer-link">Trang chủ</a>
+                    <a href="projects.html" class="footer-link">Dự án</a>
+                    <a href="reflection.html" class="footer-link">Tổng kết</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Cao Doãn Lợi (25020249). Lớp môn học VNU1001_E252015. All rights reserved.</p>
+                <div class="footer-socials">
+                    <a href="mailto:25020249@vnu.edu.vn" class="social-icon" title="Email VNU"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a>
+                    <a href="https://github.com/lloi-caoo" target="_blank" class="social-icon" title="Github"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Trigger reveal animation on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(el => el.classList.add('active'));
+        });
+    </script>
+</body>
+</html>

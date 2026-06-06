@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tổng kết & Đánh giá | Cao Doãn Lợi</title>
+    <meta name="description" content="Trang tổng kết quá trình học tập, những kiến thức, kỹ năng đạt được, khó khăn và cách khắc phục cùng định hướng phát triển tương lai của Cao Doãn Lợi.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        /* Specific Styles for Reflection Page */
+        .reflection-header {
+            padding: 60px 0 30px;
+        }
+
+        .reflection-section {
+            padding: 40px 0;
+        }
+
+        .reflection-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 32px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            margin-bottom: 32px;
+            transition: var(--transition-smooth);
+        }
+
+        .reflection-card:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .card-icon-title {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--color-primary-glow);
+            color: var(--color-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .reflection-card:nth-child(even) .card-icon {
+            background: var(--color-secondary-glow);
+            color: var(--color-secondary);
+        }
+
+        .card-title {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        /* Skill bars */
+        .skills-container {
+            margin-top: 24px;
+        }
+
+        .skill-item {
+            margin-bottom: 20px;
+        }
+
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .skill-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-bar {
+            height: 100%;
+            background: linear-gradient(95deg, var(--color-primary) 0%, #34d399 100%);
+            border-radius: 4px;
+            width: 0; /* Animated in JS or CSS load */
+            transition: width 1.5s cubic-bezier(0.1, 0.8, 0.3, 1);
+        }
+
+        .skill-item:nth-child(even) .skill-bar {
+            background: linear-gradient(95deg, var(--color-secondary) 0%, #fbbf24 100%);
+        }
+
+        /* Grid specific */
+        .challenge-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        .challenge-box {
+            background: rgba(239, 68, 68, 0.03);
+            border: 1px solid rgba(239, 68, 68, 0.15);
+            padding: 24px;
+            border-radius: 12px;
+        }
+
+        .solution-box {
+            background: rgba(16, 185, 129, 0.03);
+            border: 1px solid rgba(16, 185, 129, 0.15);
+            padding: 24px;
+            border-radius: 12px;
+        }
+
+        .box-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .challenge-box .box-title {
+            color: #ef4444;
+        }
+
+        .solution-box .box-title {
+            color: var(--color-primary);
+        }
+
+        /* Timeline future */
+        .future-list {
+            list-style: none;
+        }
+
+        .future-item {
+            position: relative;
+            padding-left: 32px;
+            margin-bottom: 24px;
+        }
+
+        .future-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            background: var(--bg-main);
+            border: 3px solid var(--color-primary);
+            border-radius: 50%;
+        }
+
+        .future-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 24px;
+            width: 2px;
+            height: calc(100% - 6px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .future-item:last-child::after {
+            display: none;
+        }
+
+        .future-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .future-desc {
+            color: var(--text-muted);
+            font-size: 14.5px;
+        }
+
+        @media (max-width: 768px) {
+            .challenge-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Nav -->
+    <header class="header" id="header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">CDL.Portfolio</a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Trang chủ</a></li>
+                <li><a href="projects.html" class="nav-link">Dự án</a></li>
+                <li><a href="reflection.html" class="nav-link active">Tổng kết</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        
+        <!-- Header Section -->
+        <section class="reflection-header reveal active">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-subtitle">Tự đánh giá bản thân</span>
+                    <h1 class="section-title">Nhìn lại Hành trình Học tập</h1>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reflection Content -->
+        <section class="reflection-section reveal active">
+            <div class="container">
+                
+                <!-- Card 1: Kiến thức & Kỹ năng -->
+                <div class="reflection-card">
+                    <div class="card-icon-title">
+                        <div class="card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                        </div>
+                        <h2 class="card-title">Kiến thức tích lũy & Kỹ năng đạt được</h2>
+                    </div>
+                    <p style="color: var(--text-muted); margin-bottom: 24px;">
+                        Thông qua việc thực hiện nghiêm túc 6 bài tập lớn trong học phần này, tôi đã hệ thống hóa và làm chủ được một lượng kiến thức và kỹ năng số vô cùng quan trọng:
+                    </p>
+                    
+                    <div class="grid-2">
+                        <div>
+                            <h3 style="font-size: 18px; margin-bottom: 16px; color: var(--color-primary);">Kiến thức cốt lõi</h3>
+                            <ul class="objective-list">
+                                <li><strong>Hệ thống quản trị file:</strong> Nắm vững cách quản trị tệp tin, phân cấp và cấu trúc bảo mật lưu trữ hệ điều hành.</li>
+                                <li><strong>Học thuật số:</strong> Nắm vững cách tìm kiếm nâng cao (toán tử Boolean), cách đánh giá chất lượng tài liệu khoa học theo chuẩn Peer-review.</li>
+                                <li><strong>Tương tác AI:</strong> Hiểu rõ cơ chế hoạt động của Mô hình ngôn ngữ lớn (LLMs), kỹ thuật Prompt Engineering cơ bản.</li>
+                                <li><strong>Liêm chính học thuật:</strong> Nắm bắt các quy tắc sử dụng AI có trách nhiệm và chính sách bản quyền học thuật của trường.</li>
+                            </ul>
+                        </div>
+                        <div class="skills-container">
+                            <h3 style="font-size: 18px; margin-bottom: 16px; color: var(--color-secondary);">Mức độ tự đánh giá Kỹ năng</h3>
+                            
+                            <div class="skill-item">
+                                <div class="skill-info"><span>Kỹ năng Quản lý Tệp & Thư mục (Bài 1)</span><span>90%</span></div>
+                                <div class="skill-bar-bg"><div class="skill-bar" data-width="90%"></div></div>
+                            </div>
+                            
+                            <div class="skill-item">
+                                <div class="skill-info"><span>Tìm kiếm & Đánh giá Học thuật (Bài 2)</span><span>85%</span></div>
+                                <div class="skill-bar-bg"><div class="skill-bar" data-width="85%"></div></div>
+                            </div>
+                            
+                            <div class="skill-item">
+                                <div class="skill-info"><span>Lập trình Python & Kỹ thuật Prompt (Bài 3)</span><span>90%</span></div>
+                                <div class="skill-bar-bg"><div class="skill-bar" data-width="90%"></div></div>
+                            </div>
+                            
+                            <div class="skill-item">
+                                <div class="skill-info"><span>Làm việc nhóm & Quản lý Dự án (Bài 4)</span><span>80%</span></div>
+                                <div class="skill-bar-bg"><div class="skill-bar" data-width="80%"></div></div>
+                            </div>
+
+                            <div class="skill-item">
+                                <div class="skill-info"><span>Sáng tạo Nội dung & Java OOP (Bài 5)</span><span>88%</span></div>
+                                <div class="skill-bar-bg"><div class="skill-bar" data-width="88%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Trải nghiệm & Thách thức -->
+                <div class="reflection-card">
+                    <div class="card-icon-title">
+                        <div class="card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        </div>
+                        <h2 class="card-title">Trải nghiệm thực tế, Khó khăn & Khắc phục</h2>
+                    </div>
+                    <p style="color: var(--text-muted);">
+                        Quá trình hoàn thành bài tập dự án này không chỉ đơn thuần là gõ code mà là một trải nghiệm thực tế quý giá với nhiều thử thách bất ngờ, đòi hỏi tư duy giải quyết vấn đề độc lập:
+                    </p>
+                    
+                    <div class="challenge-grid">
+                        <!-- Challenge 1 -->
+                        <div class="challenge-box">
+                            <div class="box-title">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                Khó khăn: Đồ thị Python bị méo tỉ lệ (Bài 3)
+                            </div>
+                            <p style="font-size: 14px; color: var(--text-muted);">
+                                Khi chạy thử đoạn mã vẽ đồ thị lưới tọa độ sau phép biến đổi tuyến tính do ChatGPT sinh ra, hình vuông bị méo thành hình chữ nhật do tỉ lệ khung hình mặc định của thư viện Matplotlib.
+                            </p>
+                        </div>
+                        
+                        <!-- Solution 1 -->
+                        <div class="solution-box">
+                            <div class="box-title">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Khắc phục: Sử dụng AI để học hàm thư viện
+                            </div>
+                            <p style="font-size: 14px; color: var(--text-muted);">
+                                Thay vì mất hàng giờ đọc tài liệu, tôi đã viết một Prompt hẹp để hỏi AI giải pháp cố định tỉ lệ khung hình. AI đã cung cấp câu lệnh `plt.gca().set_aspect('equal')` giải quyết triệt để lỗi.
+                            </p>
+                        </div>
+
+                        <!-- Challenge 2 -->
+                        <div class="challenge-box">
+                            <div class="box-title">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                Khó khăn: AI đề xuất thiết kế sai kiến trúc Java (Bài 5)
+                            </div>
+                            <p style="font-size: 14px; color: var(--text-muted);">
+                                Trong bài toán thiết kế Class OOP Đấu giá, Google Gemini đề xuất để Class `Auction` kế thừa (`extends`) từ Class `Entity`. Đây là lỗi tư duy nghiêm trọng (vi phạm Domain-Driven Design).
+                            </p>
+                        </div>
+                        
+                        <!-- Solution 2 -->
+                        <div class="solution-box">
+                            <div class="box-title">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Khắc phục: Phản biện & Sử dụng Composition
+                            </div>
+                            <p style="font-size: 14px; color: var(--text-muted);">
+                                Tôi đã chủ động bác bỏ code của AI, viết lại phần phân tích cấu trúc sử dụng quan hệ chứa trong (Composition) thay vì kế thừa (Inheritance). Điều này chứng minh tư duy kỹ thuật độc lập lớn hơn 50%.
+                            </p>
+                        </div>
+
+                        <!-- Challenge 3 -->
+                        <div class="challenge-box">
+                            <div class="box-title">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                Khó khăn: Xung đột chỉnh sửa & Quá tải kênh chat (Bài 4)
+                            </div>
+                            <p style="font-size: 14px; color: var(--text-muted);">
+                                Khi làm việc nhóm trực tuyến trên Google Docs, các thành viên hay ghi đè ý tưởng của nhau. Các link tài liệu quan trọng trên Discord cũng nhanh chóng bị trôi mất.
+                            </p>
+                        </div>
+                        
+                        <!-- Solution 3 -->
+                        <div class="solution-box">
+                            <div class="box-title">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Khắc phục: Thiết lập bộ quy tắc làm việc nhóm
+                            </div>
+                            <p style="font-size: 14px; color: var(--text-muted);">
+                                Tôi đề xuất bật chế độ "Suggesting" thay vì "Editing" trên Docs. Đồng thời, tôi chủ động lập các channels Discord chuyên biệt và ghim các tin nhắn chốt quyết định để tránh trôi thông tin.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Định hướng tương lai -->
+                <div class="reflection-card">
+                    <div class="card-icon-title">
+                        <div class="card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                        </div>
+                        <h2 class="card-title">Định hướng Phát triển trong Tương lai</h2>
+                    </div>
+                    <p style="color: var(--text-muted); margin-bottom: 24px;">
+                        Môn học Nhập môn Công nghệ số & Ứng dụng AI mới chỉ là bước khởi đầu. Để chuẩn bị tốt cho sự nghiệp của một Kỹ sư Phần mềm tương lai, tôi tự đặt ra cho mình lộ trình phát triển tiếp theo:
+                    </p>
+                    
+                    <div class="future-list">
+                        <div class="future-item">
+                            <div class="future-title">1. Nghiên cứu sâu về Machine Learning và Học sâu (Deep Learning)</div>
+                            <div class="future-desc">Dựa trên kết quả bài tập 2 về "Ứng dụng Học máy trong Dự đoán lỗi phần mềm", tôi định hướng sẽ tự học nâng cao toán học (Đại số tuyến tính, Xác suất thống kê) để tự cài đặt các thuật toán dự đoán lỗi.</div>
+                        </div>
+                        
+                        <div class="future-item">
+                            <div class="future-title">2. Làm chủ Kỹ nghệ Prompt (Advanced Prompt Engineering)</div>
+                            <div class="future-desc">Không dừng lại ở các prompt trò chuyện thông thường, tôi sẽ nghiên cứu các kỹ thuật prompt nâng cao như Few-shot prompting, Chain-of-Thought để tích hợp AI vào môi trường phát triển (IDE) tối ưu quy trình debug mã nguồn.</div>
+                        </div>
+                        
+                        <div class="future-item">
+                            <div class="future-title">3. Áp dụng nghiêm ngặt bộ nguyên tắc liêm chính học thuật</div>
+                            <div class="future-desc">Mọi sản phẩm nghiên cứu, viết code của tôi sau này luôn tuân thủ nguyên tắc "6 Không - 6 Có" đã tự thiết lập ở bài tập 6, đảm bảo sự phát triển bản thân bền vững dựa trên thực chất của tư duy sáng tạo.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo-desc">
+                    <a href="index.html" class="logo">CDL.Portfolio</a>
+                    <p class="footer-desc">
+                        Bài tập dự án cá nhân môn học Nhập môn Công nghệ số và Ứng dụng Trí tuệ nhân tạo. Được xây dựng hoàn toàn bằng HTML, CSS và JavaScript thuần.
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html" class="footer-link">Trang chủ</a>
+                    <a href="projects.html" class="footer-link">Dự án</a>
+                    <a href="reflection.html" class="footer-link">Tổng kết</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Cao Doãn Lợi (25020249). Lớp môn học VNU1001_E252015. All rights reserved.</p>
+                <div class="footer-socials">
+                    <a href="mailto:25020249@vnu.edu.vn" class="social-icon" title="Email VNU"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a>
+                    <a href="https://github.com/lloi-caoo" target="_blank" class="social-icon" title="Github"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Trigger reveal animation and skill bar animation
+        window.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(el => el.classList.add('active'));
+            
+            // Skill bar width trigger
+            setTimeout(() => {
+                const skillBars = document.querySelectorAll('.skill-bar');
+                skillBars.forEach(bar => {
+                    const width = bar.getAttribute('data-width');
+                    bar.style.width = width;
+                });
+            }, 300);
+        });
+    </script>
+</body>
+</html>

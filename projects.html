@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dự án & Bài tập thực hành | Cao Doãn Lợi</title>
+    <meta name="description" content="Danh sách 6 bài tập thực hành môn Nhập môn Công nghệ số & Ứng dụng AI của sinh viên Cao Doãn Lợi. Xem tóm tắt quá trình, kết quả và tải file minh chứng.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        /* Specific Styles for Projects Page */
+        .projects-header {
+            padding: 60px 0 30px;
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 48px;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            color: var(--text-main);
+            background: var(--color-primary-glow);
+            border-color: var(--color-primary);
+        }
+
+        .project-grid {
+            margin-bottom: 60px;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            transition: var(--transition-smooth);
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: var(--shadow-premium);
+        }
+
+        .project-img-box {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .project-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+        }
+
+        .project-card:hover .project-img {
+            transform: scale(1.05);
+        }
+
+        .project-body {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .project-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .project-title {
+            font-size: 20px;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .project-desc {
+            color: var(--text-muted);
+            font-size: 14.5px;
+            margin-bottom: 24px;
+            flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .project-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: auto;
+        }
+
+        .project-actions .btn {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Nav -->
+    <header class="header" id="header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">CDL.Portfolio</a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Trang chủ</a></li>
+                <li><a href="projects.html" class="nav-link active">Dự án</a></li>
+                <li><a href="reflection.html" class="nav-link">Tổng kết</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        
+        <!-- Header Section -->
+        <section class="projects-header reveal active">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-subtitle">Kho học liệu thực hành</span>
+                    <h1 class="section-title">Danh sách 6 Bài tập thực hành</h1>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Grid Section -->
+        <section class="project-grid reveal active">
+            <div class="container">
+                
+                <!-- Category Filter -->
+                <div class="filter-container">
+                    <button class="filter-btn active" data-filter="all">Tất cả bài tập</button>
+                    <button class="filter-btn" data-filter="tools">Công cụ số & Hợp tác</button>
+                    <button class="filter-btn" data-filter="programming">Lập trình & Sáng tạo</button>
+                    <button class="filter-btn" data-filter="ai-ethics">AI & Đạo đức học thuật</button>
+                </div>
+
+                <!-- Projects Grid -->
+                <div class="grid-3" id="projectsContainer">
+                    
+                    <!-- Card 1 -->
+                    <div class="project-card" data-category="tools">
+                        <div class="project-img-box">
+                            <img src="assets/project-thumbnails/project1.png" alt="Thao tác tệp tin và thư mục" class="project-img">
+                        </div>
+                        <div class="project-body">
+                            <div class="project-meta">
+                                <span class="badge">Bài 1</span>
+                                <span class="badge badge-secondary">Windows OS</span>
+                            </div>
+                            <h2 class="project-title">Thao tác cơ bản với tệp tin và thư mục</h2>
+                            <p class="project-desc">Thực hiện các thao tác quản trị thư mục và tệp tin trên Windows File Explorer, tổ chức dữ liệu cá nhân chuyên nghiệp và khôi phục tệp từ Recycle Bin.</p>
+                            <div class="project-actions">
+                                <button class="btn btn-secondary btn-sm open-modal-btn" data-project="1">Xem chi tiết</button>
+                                <a href="BT Cần nộp/BaiTap1_25020249_CaoDoanLoi.pdf" target="_blank" class="btn btn-primary btn-sm">Tải File</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 2 -->
+                    <div class="project-card" data-category="ai-ethics">
+                        <div class="project-img-box">
+                            <img src="assets/project-thumbnails/project2.png" alt="Tìm kiếm và đánh giá thông tin học thuật" class="project-img">
+                        </div>
+                        <div class="project-body">
+                            <div class="project-meta">
+                                <span class="badge">Bài 2</span>
+                                <span class="badge badge-secondary">Nghiên cứu</span>
+                            </div>
+                            <h2 class="project-title">Tìm kiếm và đánh giá thông tin học thuật</h2>
+                            <p class="project-desc">Xây dựng bộ từ khóa tìm kiếm học thuật về "Dự đoán lỗi phần mềm bằng Học máy". Chọn lọc và đánh giá chi tiết độ tin cậy của 11 tài liệu uy tín thuộc IEEE và ACM.</p>
+                            <div class="project-actions">
+                                <button class="btn btn-secondary btn-sm open-modal-btn" data-project="2">Xem chi tiết</button>
+                                <a href="BT Cần nộp/Week3.4_Bai2_25020249_CaoDoanLoi.docx" download class="btn btn-primary btn-sm">Tải File</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 3 -->
+                    <div class="project-card" data-category="programming">
+                        <div class="project-img-box">
+                            <img src="assets/project-thumbnails/project3.png" alt="Viết Prompt hiệu quả cho các tác vụ học tập" class="project-img">
+                        </div>
+                        <div class="project-body">
+                            <div class="project-meta">
+                                <span class="badge">Bài 3</span>
+                                <span class="badge badge-secondary">Python / AI</span>
+                            </div>
+                            <h2 class="project-title">Viết Prompt hiệu quả cho các tác vụ học tập</h2>
+                            <p class="project-desc">Phối hợp cùng ChatGPT & Gemini viết script Python (NumPy + Matplotlib) để trực quan hóa phép biến đổi tuyến tính trong R2. Debug lỗi méo tỷ lệ khung hình đồ thị.</p>
+                            <div class="project-actions">
+                                <button class="btn btn-secondary btn-sm open-modal-btn" data-project="3">Xem chi tiết</button>
+                                <a href="BT Cần nộp/Week5_6_Bai3_25020249_CaoDoanLoi.docx" download class="btn btn-primary btn-sm">Tải File</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 4 -->
+                    <div class="project-card" data-category="tools">
+                        <div class="project-img-box">
+                            <img src="assets/project-thumbnails/project4.png" alt="Sử dụng công cụ hợp tác trực tuyến cho dự án nhóm" class="project-img">
+                        </div>
+                        <div class="project-body">
+                            <div class="project-meta">
+                                <span class="badge">Bài 4</span>
+                                <span class="badge badge-secondary">Teamwork</span>
+                            </div>
+                            <h2 class="project-title">Sử dụng công cụ hợp tác trực tuyến cho nhóm</h2>
+                            <p class="project-desc">Ứng dụng Trello, Google Drive và Discord để thiết lập dự án nhóm (Nhóm 9). Quản lý tài nguyên đa cấp khoa học và đưa ra giải pháp giải quyết xung đột nhóm.</p>
+                            <div class="project-actions">
+                                <button class="btn btn-secondary btn-sm open-modal-btn" data-project="4">Xem chi tiết</button>
+                                <a href="BT Cần nộp/Week7_8_Bai3_25020249_CaoDoanLoi.docx" download class="btn btn-primary btn-sm">Tải File</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 5 -->
+                    <div class="project-card" data-category="programming">
+                        <div class="project-img-box">
+                            <img src="assets/project-thumbnails/project5.png" alt="Sử dụng AI tạo sinh để hỗ trợ sáng tạo nội dung" class="project-img">
+                        </div>
+                        <div class="project-body">
+                            <div class="project-meta">
+                                <span class="badge">Bài 5</span>
+                                <span class="badge badge-secondary">Java OOP / AI</span>
+                            </div>
+                            <h2 class="project-title">Sử dụng AI tạo sinh để hỗ tạo nội dung số</h2>
+                            <p class="project-desc">Sáng tác bài viết Blog kỹ thuật về Java OOP Đấu giá trên Canva Doc. Phản biện lỗi tư duy kiến trúc của AI và đề xuất Composition thay vì Inheritance.</p>
+                            <div class="project-actions">
+                                <button class="btn btn-secondary btn-sm open-modal-btn" data-project="5">Xem chi tiết</button>
+                                <a href="BT Cần nộp/Week9_10_Bai2_25020249_CaoDoanLoi.docx" download class="btn btn-primary btn-sm">Tải File</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 6 -->
+                    <div class="project-card" data-category="ai-ethics">
+                        <div class="project-img-box">
+                            <img src="assets/project-thumbnails/project6.png" alt="Sử dụng AI có trách nhiệm trong học tập và nghiên cứu" class="project-img">
+                        </div>
+                        <div class="project-body">
+                            <div class="project-meta">
+                                <span class="badge">Bài 6</span>
+                                <span class="badge badge-secondary">Liêm chính</span>
+                            </div>
+                            <h2 class="project-title">Sử dụng AI có trách nhiệm trong học tập</h2>
+                            <p class="project-desc">Nghiên cứu chính sách AI của trường Đại học, viết bài luận có AI hỗ trợ có trích dẫn APA rõ ràng, lập bộ nguyên tắc cá nhân "6 Không - 6 Có" khi dùng AI.</p>
+                            <div class="project-actions">
+                                <button class="btn btn-secondary btn-sm open-modal-btn" data-project="6">Xem chi tiết</button>
+                                <a href="BT Cần nộp/Week11_12_Bai4_25020249_CaoDoanLoi.docx" download class="btn btn-primary btn-sm">Tải File</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal Popup Container -->
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose" aria-label="Close Modal">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="modal-body" id="modalBody">
+                <!-- Content injected dynamically via main.js -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo-desc">
+                    <a href="index.html" class="logo">CDL.Portfolio</a>
+                    <p class="footer-desc">
+                        Bài tập dự án cá nhân môn học Nhập môn Công nghệ số và Ứng dụng Trí tuệ nhân tạo. Được xây dựng hoàn toàn bằng HTML, CSS và JavaScript thuần.
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html" class="footer-link">Trang chủ</a>
+                    <a href="projects.html" class="footer-link">Dự án</a>
+                    <a href="reflection.html" class="footer-link">Tổng kết</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Cao Doãn Lợi (25020249). Lớp môn học VNU1001_E252015. All rights reserved.</p>
+                <div class="footer-socials">
+                    <a href="mailto:25020249@vnu.edu.vn" class="social-icon" title="Email VNU"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a>
+                    <a href="https://github.com/lloi-caoo" target="_blank" class="social-icon" title="Github"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Trigger reveal animation on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(el => el.classList.add('active'));
+        });
+    </script>
+</body>
+</html>
