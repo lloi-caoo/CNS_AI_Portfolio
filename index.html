@@ -88,11 +88,64 @@
             box-shadow: 0 0 10px var(--color-primary);
         }
 
+        .typewriter-cursor {
+            color: var(--color-primary);
+            animation: blink 0.7s infinite;
+            margin-left: 2px;
+            font-weight: bold;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
         .hero-desc {
             color: var(--text-muted);
             font-size: 16px;
             margin-bottom: 32px;
             max-width: 540px;
+        }
+
+        .personal-info-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 28px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px 12px;
+            max-width: 540px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .info-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            color: var(--color-primary);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+        
+        .info-val {
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 14.5px;
+        }
+
+        @media (max-width: 480px) {
+            .personal-info-card {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
         }
 
         .hero-actions {
@@ -333,10 +386,28 @@
                 <div class="hero-content">
                     <span class="hero-title-greeting">Xin chào, tôi là</span>
                     <h1 class="hero-name">Cao Doãn Lợi</h1>
-                    <div class="hero-role">Sinh viên Công nghệ thông tin</div>
+                    <div class="hero-role"><span id="typewriter">Sinh viên Công nghệ thông tin</span><span class="typewriter-cursor">|</span></div>
                     <p class="hero-desc">
                         Chào mừng bạn đến với Digital Portfolio cá nhân của tôi. Đây là nơi tôi lưu trữ, hệ thống hóa và trình bày các sản phẩm bài tập thực hành trong môn học <strong>Nhập môn Công nghệ số và Ứng dụng Trí tuệ nhân tạo</strong> (Trường Đại học Công nghệ - ĐHQGHN). Qua dự án này, tôi muốn thể hiện kỹ năng thực hành công nghệ số và sự phát triển tư duy của mình.
                     </p>
+                    <div class="personal-info-card">
+                        <div class="info-field">
+                            <span class="info-label">Họ và tên</span>
+                            <span class="info-val">Cao Doãn Lợi</span>
+                        </div>
+                        <div class="info-field">
+                            <span class="info-label">Mã sinh viên</span>
+                            <span class="info-val">25020249</span>
+                        </div>
+                        <div class="info-field">
+                            <span class="info-label">Ngành học</span>
+                            <span class="info-val">Công nghệ thông tin (CNTT)</span>
+                        </div>
+                        <div class="info-field">
+                            <span class="info-label">Lớp học</span>
+                            <span class="info-val">K70I-IT2</span>
+                        </div>
+                    </div>
                     <div class="hero-actions">
                         <a href="projects.html" class="btn btn-primary">
                             Xem các bài tập
@@ -500,6 +571,46 @@
         window.addEventListener('DOMContentLoaded', () => {
             const reveals = document.querySelectorAll('.reveal');
             reveals.forEach(el => el.classList.add('active'));
+            
+            // Typewriter Effect
+            const words = [
+                "Sinh viên Công nghệ thông tin",
+                "Đam mê Ứng dụng Trí tuệ nhân tạo (AI)",
+                "Lập trình viên tương lai",
+                "Hành trình kiến tạo tương lai số"
+            ];
+            let wordIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            const typewriterEl = document.getElementById('typewriter');
+            
+            function type() {
+                if (!typewriterEl) return;
+                const currentWord = words[wordIndex];
+                if (isDeleting) {
+                    typewriterEl.textContent = currentWord.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    typewriterEl.textContent = currentWord.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+                
+                let typeSpeed = isDeleting ? 30 : 60;
+                
+                if (!isDeleting && charIndex === currentWord.length) {
+                    typeSpeed = 2000; // Pause at end of word
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    wordIndex = (wordIndex + 1) % words.length;
+                    typeSpeed = 500; // Pause before typing next word
+                }
+                
+                setTimeout(type, typeSpeed);
+            }
+            
+            // Start typewriter on load
+            setTimeout(type, 1000);
         });
     </script>
 </body>
