@@ -166,4 +166,22 @@ document.addEventListener('DOMContentLoaded', () => {
             closeModal();
         }
     });
+
+    // 5. Light/Dark Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        // Sync body class with html class
+        if (document.documentElement.classList.contains('light-theme')) {
+            document.body.classList.add('light-theme');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            const isLight = document.documentElement.classList.toggle('light-theme');
+            document.body.classList.toggle('light-theme');
+            
+            // Save theme preference
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        });
+    }
 });
+

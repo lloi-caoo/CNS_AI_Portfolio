@@ -745,5 +745,146 @@ main {
     }
 }
 
+/* Light Mode Theme */
+html.light-theme,
+body.light-theme {
+    --bg-main: #f3f4f6;
+    --bg-surface: #ffffff;
+    --bg-card: rgba(255, 255, 255, 0.8);
+    --border-color: rgba(0, 0, 0, 0.08);
+    --text-main: #1f2937;
+    --text-muted: #4b5563;
+    --shadow-premium: 0 10px 30px -10px rgba(0, 0, 0, 0.06);
+    --color-primary-glow: rgba(16, 185, 129, 0.08);
+    --color-secondary-glow: rgba(245, 158, 11, 0.08);
+}
+
+body.light-theme::before {
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.05) 0%, transparent 70%);
+}
+
+body.light-theme::after {
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.04) 0%, transparent 70%);
+}
+
+body.light-theme .header {
+    background: rgba(243, 244, 246, 0.8) !important;
+}
+
+body.light-theme .header.scrolled {
+    background: rgba(243, 244, 246, 0.95) !important;
+}
+
+body.light-theme .nav-menu {
+    background: rgba(243, 244, 246, 0.98) !important;
+}
+
+body.light-theme .btn-secondary {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+body.light-theme .btn-secondary:hover {
+    background: rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+body.light-theme .timeline::before {
+    background: rgba(0, 0, 0, 0.08) !important;
+}
+
+body.light-theme .timeline-dot {
+    background: var(--bg-main) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+body.light-theme ::-webkit-scrollbar-track {
+    background: var(--bg-main);
+}
+
+body.light-theme ::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+}
+
+body.light-theme ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary);
+}
+
+/* Nav Right Wrapper & Theme Toggle button styles */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.theme-toggle {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-main);
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--color-primary);
+    transform: scale(1.05);
+}
+
+.theme-toggle svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: var(--transition-smooth);
+    position: absolute;
+}
+
+body:not(.light-theme) .theme-toggle .sun-icon {
+    transform: translateY(0) rotate(0);
+    opacity: 1;
+}
+
+body:not(.light-theme) .theme-toggle .moon-icon {
+    transform: translateY(40px) rotate(90deg);
+    opacity: 0;
+}
+
+body.light-theme .theme-toggle .sun-icon {
+    transform: translateY(-40px) rotate(-90deg);
+    opacity: 0;
+}
+
+body.light-theme .theme-toggle .moon-icon {
+    transform: translateY(0) rotate(0);
+    opacity: 1;
+}
+
+body.light-theme .theme-toggle {
+    background: rgba(0, 0, 0, 0.03);
+    color: var(--text-main);
+}
+
+body.light-theme .theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+@media (max-width: 768px) {
+    .nav-right {
+        gap: 16px;
+    }
+}
+
+
 
 

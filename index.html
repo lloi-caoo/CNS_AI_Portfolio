@@ -357,6 +357,12 @@
             }
         }
     </style>
+    <script>
+        // Apply theme immediately to prevent flashing
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.add('light-theme');
+        }
+    </script>
 </head>
 <body>
 
@@ -364,16 +370,22 @@
     <header class="header" id="header">
         <div class="container nav-container">
             <a href="index.html" class="logo">CDL.Portfolio</a>
-            <button class="nav-toggle" id="navToggle" aria-label="Toggle Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html" class="nav-link active">Trang chủ</a></li>
-                <li><a href="projects.html" class="nav-link">Dự án</a></li>
-                <li><a href="reflection.html" class="nav-link">Tổng kết</a></li>
-            </ul>
+            <div class="nav-right">
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" class="nav-link active">Trang chủ</a></li>
+                    <li><a href="projects.html" class="nav-link">Dự án</a></li>
+                    <li><a href="reflection.html" class="nav-link">Tổng kết</a></li>
+                </ul>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </div>
     </header>
 
