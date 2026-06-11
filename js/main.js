@@ -1,32 +1,41 @@
 // Main JavaScript for Cao Doan Loi Portfolio
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Sticky Header scroll effect
-    const header = document.getElementById('header');
+    // 1. Mobile Header scroll effect (sticky header)
+    const mobileHeader = document.querySelector('.mobile-header');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
-            header.classList.add('scrolled');
+            mobileHeader?.classList.add('scrolled');
         } else {
-            header.classList.remove('scrolled');
+            mobileHeader?.classList.remove('scrolled');
         }
     });
 
-    // 2. Mobile Menu Toggle
-    const navToggle = document.getElementById('navToggle');
-    const navMenu = document.getElementById('navMenu');
+    // 2. Mobile Menu Toggle (Slide out drawer)
+    const mobileNavToggle = document.getElementById('mobileNavToggle');
+    const mobileMenuDrawer = document.getElementById('mobileMenuDrawer');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
 
-    if (navToggle && navMenu) {
-        navToggle.addEventListener('click', () => {
-            navToggle.classList.toggle('active');
-            navMenu.classList.toggle('active');
+    if (mobileNavToggle && mobileMenuDrawer && mobileMenuOverlay) {
+        mobileNavToggle.addEventListener('click', () => {
+            mobileNavToggle.classList.toggle('active');
+            mobileMenuDrawer.classList.toggle('active');
+            mobileMenuOverlay.classList.toggle('active');
+        });
+
+        mobileMenuOverlay.addEventListener('click', () => {
+            mobileNavToggle.classList.remove('active');
+            mobileMenuDrawer.classList.remove('active');
+            mobileMenuOverlay.classList.remove('active');
         });
 
         // Close menu when clicking links
-        const navLinks = document.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
+        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+        mobileMenuLinks.forEach(link => {
             link.addEventListener('click', () => {
-                navToggle.classList.remove('active');
-                navMenu.classList.remove('active');
+                mobileNavToggle.classList.remove('active');
+                mobileMenuDrawer.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
             });
         });
     }
@@ -63,11 +72,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 4. Modal Popup Logic & Loading HTML Content Dynamically
-    const modal = document.getElementById('projectModal');
-    const modalBody = document.getElementById('modalBody');
-    const modalClose = document.getElementById('modalClose');
-    const openModalBtns = document.querySelectorAll('.open-modal-btn');
+    // 4. Sliding Side Drawer Logic & Loading HTML Content Dynamically
+    const drawer = document.getElementById('projectDrawer');
+    const drawerBody = document.getElementById('drawerBody');
+    const drawerClose = document.getElementById('drawerClose');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+    const openDrawerBtns = document.querySelectorAll('.open-modal-btn'); // Matches button class in projects.html
 
     // Projects metadata for badge and category mapping
     const projectsMeta = {
@@ -79,13 +89,32 @@ document.addEventListener('DOMContentLoaded', () => {
         6: { badge: "Bài 6", category: "Đạo đức AI & Liêm chính" }
     };
 
-    // Open Modal function loading raw original html file dynamically
-    function openModal(projectId) {
+    // Open Drawer function loading raw original html file dynamically
+    function openDrawer(projectId) {
         const meta = projectsMeta[projectId];
         if (!meta) return;
 
+        // 1. Try to load content from local inline elements (offline / file-protocol compatibility)
+        const localContentEl = document.getElementById(`project-content-${projectId}`);
+        if (localContentEl) {
+            const htmlContent = localContentEl.innerHTML;
+            const processedHtml = htmlContent.replace(/(src=["'])proofs\//g, '$1assets/proofs/');
+
+            drawerBody.innerHTML = `
+                <div class="modal-header-desc">
+                    <span class="badge">${meta.badge}</span>
+                    <span class="badge badge-secondary" style="background: rgba(255,255,255,0.03); color: var(--text-muted); border-color: var(--border-color);">${meta.category}</span>
+                </div>
+                ${processedHtml}
+            `;
+            drawer.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Disable page scrolling
+            return;
+        }
+
+        // 2. Fallback: Fetch the HTML content dynamically from assets/project[N].html (if not inlined)
         // Show loading state first
-        modalBody.innerHTML = `
+        drawerBody.innerHTML = `
             <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px; color: var(--text-muted);">
                 <div class="loading-spinner" style="width: 32px; height: 32px; border: 3px solid rgba(255,255,255,0.05); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 16px;"></div>
                 <p>Đang tải nội dung bản gốc từ file báo cáo...</p>
@@ -97,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </style>
         `;
 
-        modal.classList.add('active');
+        drawer.classList.add('active');
         document.body.style.overflow = 'hidden'; // Disable page scrolling
 
         // Fetch the HTML content dynamically from assets/project[N].html
@@ -117,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // because this HTML is being injected into projects.html at the root folder
                 const processedHtml = htmlContent.replace(/(src=["'])proofs\//g, '$1assets/proofs/');
 
-                modalBody.innerHTML = `
+                drawerBody.innerHTML = `
                     <div class="modal-header-desc">
                         <span class="badge">${meta.badge}</span>
                         <span class="badge badge-secondary" style="background: rgba(255,255,255,0.03); color: var(--text-muted); border-color: var(--border-color);">${meta.category}</span>
@@ -126,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             })
             .catch(error => {
-                modalBody.innerHTML = `
+                drawerBody.innerHTML = `
                     <div style="padding: 40px; text-align: center; color: #ef4444;">
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom: 16px; display: block; margin-left: auto; margin-right: auto;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
                         <p>Đã xảy ra lỗi khi tải nội dung: ${error.message}</p>
@@ -135,53 +164,52 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    // Close Modal function
-    function closeModal() {
-        modal.classList.remove('active');
+    // Close Drawer function
+    function closeDrawer() {
+        drawer.classList.remove('active');
         document.body.style.overflow = ''; // Enable page scrolling
     }
 
     // Bind event listeners to open buttons
-    openModalBtns.forEach(btn => {
+    openDrawerBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const projectId = btn.getAttribute('data-project');
-            openModal(projectId);
+            openDrawer(projectId);
         });
     });
 
     // Bind close events
-    if (modalClose) {
-        modalClose.addEventListener('click', closeModal);
+    if (drawerClose) {
+        drawerClose.addEventListener('click', closeDrawer);
     }
 
-    window.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            closeModal();
-        }
-    });
+    if (drawerOverlay) {
+        drawerOverlay.addEventListener('click', closeDrawer);
+    }
 
-    // Close modal on Escape key press
+    // Close drawer on Escape key press
     window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
-            closeModal();
+        if (e.key === 'Escape' && drawer && drawer.classList.contains('active')) {
+            closeDrawer();
         }
     });
 
-    // 5. Light/Dark Theme Toggle
-    const themeToggle = document.getElementById('themeToggle');
-    if (themeToggle) {
-        // Sync body class with html class
+    // 5. Synchronized Light/Dark Theme Toggles
+    const themeToggles = document.querySelectorAll('.theme-toggle');
+    if (themeToggles.length > 0) {
+        // Sync body class with html class on initialization
         if (document.documentElement.classList.contains('light-theme')) {
             document.body.classList.add('light-theme');
         }
         
-        themeToggle.addEventListener('click', () => {
-            const isLight = document.documentElement.classList.toggle('light-theme');
-            document.body.classList.toggle('light-theme');
-            
-            // Save theme preference
-            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        themeToggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const isLight = document.documentElement.classList.toggle('light-theme');
+                document.body.classList.toggle('light-theme');
+                
+                // Save theme preference
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            });
         });
     }
 });
-
