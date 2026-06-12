@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dự án & Bài tập thực hành | Cao Doãn Lợi</title>
     <meta name="description" content="Danh sách 6 bài tập thực hành môn Nhập môn Công nghệ số & Ứng dụng AI của sinh viên Cao Doãn Lợi. Xem tóm tắt quá trình, kết quả và tải file minh chứng.">
-    <link rel="stylesheet" href="css/style.css?v=1.4">
-    <link rel="stylesheet" href="css/responsive.css?v=1.4">
+    <link rel="stylesheet" href="css/style.css?v=2.2">
+    <link rel="stylesheet" href="css/responsive.css?v=2.2">
     <style>
         /* Specific Styles for Projects Page */
         .projects-header {
@@ -128,6 +128,7 @@
     </script>
 </head>
 <body>
+    <canvas id="cyberCanvas"></canvas>
 
     <!-- Desktop Sidebar -->
     <aside class="sidebar">
@@ -241,7 +242,7 @@
                             <p class="project-desc">Thực hiện các thao tác quản trị thư mục và tệp tin trên Windows File Explorer, tổ chức dữ liệu cá nhân chuyên nghiệp và khôi phục tệp từ Recycle Bin.</p>
                             <div class="project-actions">
                                 <button class="btn btn-secondary btn-sm open-modal-btn" data-project="1">Xem chi tiết</button>
-                                <a href="BT Cần nộp/BaiTap1_25020249_CaoDoanLoi.pdf" target="_blank" class="btn btn-primary btn-sm">Tải File</a>
+                                <a href="BT%20Cần%20nộp/BaiTap1_25020249_CaoDoanLoi.pdf" target="_blank" class="btn btn-primary btn-sm">Tải File</a>
                             </div>
                         </div>
                     </div>
@@ -260,7 +261,7 @@
                             <p class="project-desc">Xây dựng bộ từ khóa tìm kiếm học thuật về "Dự đoán lỗi phần mềm bằng Học máy". Chọn lọc và đánh giá chi tiết độ tin cậy của 11 tài liệu uy tín thuộc IEEE và ACM.</p>
                             <div class="project-actions">
                                 <button class="btn btn-secondary btn-sm open-modal-btn" data-project="2">Xem chi tiết</button>
-                                <a href="BT Cần nộp/Week3.4_Bai2_25020249_CaoDoanLoi.docx" download class="btn btn-primary btn-sm">Tải File</a>
+                                <a href="BT%20Cần%20nộp/Week3.4_Bai2_25020249_CaoDoanLoi.docx" target="_blank" class="btn btn-primary btn-sm">Tải File</a>
                             </div>
                         </div>
                     </div>
@@ -279,7 +280,7 @@
                             <p class="project-desc">Phối hợp cùng ChatGPT & Gemini viết script Python (NumPy + Matplotlib) để trực quan hóa phép biến đổi tuyến tính trong R2. Debug lỗi méo tỷ lệ khung hình đồ thị.</p>
                             <div class="project-actions">
                                 <button class="btn btn-secondary btn-sm open-modal-btn" data-project="3">Xem chi tiết</button>
-                                <a href="BT Cần nộp/Week5_6_Bai3_25020249_CaoDoanLoi.docx" download class="btn btn-primary btn-sm">Tải File</a>
+                                <a href="BT%20Cần%20nộp/Week5_6_Bai3_25020249_CaoDoanLoi.docx" target="_blank" class="btn btn-primary btn-sm">Tải File</a>
                             </div>
                         </div>
                     </div>
@@ -298,7 +299,7 @@
                             <p class="project-desc">Ứng dụng Trello, Google Drive và Discord để thiết lập dự án nhóm (Nhóm 9). Quản lý tài nguyên đa cấp khoa học và đưa ra giải pháp giải quyết xung đột nhóm.</p>
                             <div class="project-actions">
                                 <button class="btn btn-secondary btn-sm open-modal-btn" data-project="4">Xem chi tiết</button>
-                                <a href="BT Cần nộp/Week7_8_Bai3_25020249_CaoDoanLoi.docx" download class="btn btn-primary btn-sm">Tải File</a>
+                                <a href="BT%20Cần%20nộp/Week7_8_Bai3_25020249_CaoDoanLoi.docx" target="_blank" class="btn btn-primary btn-sm">Tải File</a>
                             </div>
                         </div>
                     </div>
@@ -317,7 +318,7 @@
                             <p class="project-desc">Sáng tác bài viết Blog kỹ thuật về Java OOP Đấu giá trên Canva Doc. Phản biện lỗi tư duy kiến trúc của AI và đề xuất Composition thay vì Inheritance.</p>
                             <div class="project-actions">
                                 <button class="btn btn-secondary btn-sm open-modal-btn" data-project="5">Xem chi tiết</button>
-                                <a href="BT Cần nộp/Week9_10_Bai2_25020249_CaoDoanLoi.docx" download class="btn btn-primary btn-sm">Tải File</a>
+                                <a href="BT%20Cần%20nộp/Week9_10_Bai2_25020249_CaoDoanLoi.docx" target="_blank" class="btn btn-primary btn-sm">Tải File</a>
                             </div>
                         </div>
                     </div>
@@ -336,7 +337,7 @@
                             <p class="project-desc">Nghiên cứu chính sách AI của trường Đại học, viết bài luận có AI hỗ trợ có trích dẫn APA rõ ràng, lập bộ nguyên tắc cá nhân "6 Không - 6 Có" khi dùng AI.</p>
                             <div class="project-actions">
                                 <button class="btn btn-secondary btn-sm open-modal-btn" data-project="6">Xem chi tiết</button>
-                                <a href="BT Cần nộp/Week11_12_Bai4_25020249_CaoDoanLoi.docx" download class="btn btn-primary btn-sm">Tải File</a>
+                                <a href="BT%20Cần%20nộp/Week11_12_Bai4_25020249_CaoDoanLoi.docx" target="_blank" class="btn btn-primary btn-sm">Tải File</a>
                             </div>
                         </div>
                     </div>
@@ -367,6 +368,7 @@
                 <p>&copy; 2026 Cao Doãn Lợi (25020249). Lớp môn học VNU1001_E252015. All rights reserved.</p>
                 <div class="footer-socials">
                     <a href="mailto:25020249@vnu.edu.vn" class="social-icon" title="Email VNU"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a>
+                    <a href="mailto:loicao992@gmail.com" class="social-icon" title="Gmail cá nhân"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M22 7l-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg></a>
                     <a href="https://github.com/lloi-caoo" target="_blank" class="social-icon" title="Github"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
                 </div>
             </div>
@@ -525,7 +527,7 @@
         </div>
     </div>
 
-    <script src="js/main.js?v=1.4"></script>
+    <script src="js/main.js?v=2.2"></script>
     <script>
         // Trigger reveal animation on load
         window.addEventListener('DOMContentLoaded', () => {

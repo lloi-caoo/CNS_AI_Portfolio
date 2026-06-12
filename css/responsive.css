@@ -111,7 +111,8 @@
 /* Dashboard Responsive Layouts */
 @media (max-width: 1024px) {
     .drawer-content {
-        width: 80%;
+        width: 90%;
+        max-width: 800px;
     }
 }
 
@@ -135,8 +136,10 @@
     }
     
     .drawer-content {
-        width: 100% !important;
+        width: 95% !important;
+        max-height: 90vh !important;
         padding: 30px 20px !important;
+        border-radius: 12px !important;
     }
 }
 

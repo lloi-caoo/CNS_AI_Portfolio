@@ -212,4 +212,351 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // 6. Interactive Cyber Canvas Particle Network & Skills Linkage
+    const canvas = document.getElementById('cyberCanvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let packets = [];
+        let mouse = { x: null, y: null, radius: 160, rotation: 0 };
+        const labelPool = ["SYS-HUB 01", "DATA-RX", "VNU-IT", "NODE-70", "SEC-CON", "NET-PORT", "AI-PROC"];
+
+        // Handle sizing
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        }
+
+        // Particle Class (Representing diverse tech nodes)
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.35;
+                this.vy = (Math.random() - 0.5) * 0.35;
+                this.radius = Math.random() * 2 + 1;
+                this.alpha = Math.random() * 0.5 + 0.2;
+                this.pulseSpeed = Math.random() * 0.015 + 0.005;
+                this.pulseDir = 1;
+                
+                // Determine node type
+                const rand = Math.random();
+                if (rand < 0.6) {
+                    this.type = 'dot';
+                } else if (rand < 0.75) {
+                    this.type = 'hub'; // Server/router hub with rings & labels
+                    this.radius = Math.random() * 3 + 3;
+                    this.label = labelPool[Math.floor(Math.random() * labelPool.length)];
+                } else if (rand < 0.9) {
+                    this.type = 'crosshair'; // Small mechanical "+" symbol
+                    this.angle = Math.random() * Math.PI;
+                    this.rotSpeed = (Math.random() - 0.5) * 0.02;
+                } else {
+                    this.type = 'hexagon'; // Tech hexagon
+                    this.angle = Math.random() * Math.PI;
+                    this.rotSpeed = (Math.random() - 0.5) * 0.015;
+                    this.size = Math.random() * 4 + 4;
+                }
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Bounce off edges
+                if (this.x < 0 || this.x > canvas.width) this.vx = -this.vx;
+                if (this.y < 0 || this.y > canvas.height) this.vy = -this.vy;
+
+                // Breathe effect (pulse opacity)
+                this.alpha += this.pulseSpeed * this.pulseDir;
+                if (this.alpha > 0.8 || this.alpha < 0.15) {
+                    this.pulseDir = -this.pulseDir;
+                }
+
+                // Rotation
+                if (this.type === 'crosshair' || this.type === 'hexagon') {
+                    this.angle += this.rotSpeed;
+                }
+            }
+
+            draw() {
+                const isLightTheme = document.documentElement.classList.contains('light-theme');
+                const baseAlpha = isLightTheme ? this.alpha * 0.5 : this.alpha;
+                ctx.save();
+                
+                // Set glowing shadow color in dark mode
+                if (!isLightTheme) {
+                    ctx.shadowBlur = this.type === 'hub' ? 10 : 6;
+                    ctx.shadowColor = '#10b981';
+                }
+                ctx.fillStyle = `rgba(16, 185, 129, ${baseAlpha})`;
+                ctx.strokeStyle = `rgba(16, 185, 129, ${baseAlpha * 0.7})`;
+                ctx.lineWidth = 1;
+
+                if (this.type === 'dot') {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                } else if (this.type === 'hub') {
+                    // Draw outer concentric ring
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius + 4 + Math.sin(Date.now() * 0.005) * 2, 0, Math.PI * 2);
+                    ctx.stroke();
+
+                    // Draw center core
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius - 1, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Text labels
+                    ctx.shadowBlur = 0; // Turn off shadow for text readability
+                    ctx.font = '9px monospace';
+                    ctx.fillStyle = `rgba(16, 185, 129, ${baseAlpha * 0.6})`;
+                    ctx.fillText(this.label, this.x + this.radius + 6, this.y + 3);
+                } else if (this.type === 'crosshair') {
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.angle);
+                    ctx.beginPath();
+                    // Draw horizontal line
+                    ctx.moveTo(-5, 0); ctx.lineTo(5, 0);
+                    // Draw vertical line
+                    ctx.moveTo(0, -5); ctx.lineTo(0, 5);
+                    ctx.stroke();
+                } else if (this.type === 'hexagon') {
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.angle);
+                    ctx.beginPath();
+                    for (let side = 0; side < 6; side++) {
+                        const angle = (side * Math.PI) / 3;
+                        const px = Math.cos(angle) * this.size;
+                        const py = Math.sin(angle) * this.size;
+                        if (side === 0) ctx.moveTo(px, py);
+                        else ctx.lineTo(px, py);
+                    }
+                    ctx.closePath();
+                    ctx.stroke();
+                }
+
+                ctx.restore();
+            }
+        }
+
+        // DataPacket Class (moving signals along nodes)
+        class DataPacket {
+            constructor(startNode, endNode) {
+                this.start = startNode;
+                this.end = endNode;
+                this.progress = 0;
+                this.speed = Math.random() * 0.02 + 0.015; // Speed fraction per frame
+            }
+
+            update() {
+                this.progress += this.speed;
+                return this.progress >= 1; // Returns true when packet reaches target
+            }
+
+            draw() {
+                const isLightTheme = document.documentElement.classList.contains('light-theme');
+                // Calculate current coordinates
+                const x = this.start.x + (this.end.x - this.start.x) * this.progress;
+                const y = this.start.y + (this.end.y - this.start.y) * this.progress;
+
+                ctx.save();
+                if (!isLightTheme) {
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = '#10b981';
+                }
+                ctx.beginPath();
+                ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+                ctx.fillStyle = isLightTheme ? 'rgba(16, 185, 129, 0.9)' : '#10b981';
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        // Initialize particles
+        function initParticles() {
+            particles = [];
+            packets = [];
+            const count = Math.min(Math.floor((canvas.width * canvas.height) / 16000), 75);
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        // Connect particles & manage packets spawn
+        function connectParticles() {
+            const maxDistance = 120;
+            const isLightTheme = document.documentElement.classList.contains('light-theme');
+            
+            for (let i = 0; i < particles.length; i++) {
+                let connectionsCount = 0;
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < maxDistance) {
+                        connectionsCount++;
+                        const alpha = (1 - dist / maxDistance) * 0.12;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = isLightTheme ? `rgba(16, 185, 129, ${alpha * 0.5})` : `rgba(16, 185, 129, ${alpha})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+
+                        // Randomly spawn data packet between these two connected nodes
+                        if (Math.random() < 0.0006 && packets.length < 15) {
+                            packets.push(new DataPacket(particles[i], particles[j]));
+                        }
+                    }
+                }
+
+                // Connect to mouse cursor
+                if (mouse.x !== null && mouse.y !== null) {
+                    const dx = particles[i].x - mouse.x;
+                    const dy = particles[i].y - mouse.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < mouse.radius) {
+                        const alpha = (1 - dist / mouse.radius) * 0.22;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(mouse.x, mouse.y);
+                        ctx.strokeStyle = isLightTheme ? `rgba(16, 185, 129, ${alpha * 0.4})` : `rgba(16, 185, 129, ${alpha})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        // Draw Interactive Cyber HUD Radar
+        function drawCyberHUD() {
+            if (mouse.x === null || mouse.y === null) return;
+            const isLightTheme = document.documentElement.classList.contains('light-theme');
+            const hudAlpha = isLightTheme ? 0.25 : 0.65;
+
+            ctx.save();
+            ctx.strokeStyle = `rgba(16, 185, 129, ${hudAlpha})`;
+            ctx.lineWidth = 1;
+
+            // Increment rotation
+            mouse.rotation += 0.006;
+
+            // 1. Draw outer dotted radar ring
+            ctx.beginPath();
+            ctx.arc(mouse.x, mouse.y, 45, 0, Math.PI * 2);
+            ctx.setLineDash([3, 5]);
+            ctx.stroke();
+            ctx.setLineDash([]); // reset
+
+            // 2. Draw inner rotating crosshair brackets
+            ctx.translate(mouse.x, mouse.y);
+            ctx.rotate(mouse.rotation);
+            ctx.beginPath();
+            // Draw four brackets
+            for (let b = 0; b < 4; b++) {
+                ctx.rotate(Math.PI / 2);
+                ctx.moveTo(22, -6);
+                ctx.lineTo(28, -6);
+                ctx.lineTo(28, 6);
+            }
+            ctx.stroke();
+
+            // 3. Draw tiny center reticle
+            ctx.beginPath();
+            ctx.arc(0, 0, 3, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(16, 185, 129, ${hudAlpha * 0.8})`;
+            ctx.fill();
+
+            // 4. Draw screen coordinates text readout
+            ctx.rotate(-mouse.rotation); // Reset rotation to normal text angle
+            ctx.font = '9px monospace';
+            ctx.fillStyle = `rgba(16, 185, 129, ${hudAlpha})`;
+            const textLoc = `LOC [${Math.floor(mouse.x)}, ${Math.floor(mouse.y)}]`;
+            const textStat = `SYS_ST: ONLINE`;
+            ctx.fillText(textLoc, 55, -8);
+            ctx.fillText(textStat, 55, 6);
+
+            ctx.restore();
+        }
+
+        // Animation Loop
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw and update nodes
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            // Draw and update packets
+            packets = packets.filter(packet => {
+                const finished = packet.update();
+                packet.draw();
+                return !finished; // Keep if not finished
+            });
+
+            // Connect nodes & draw HUD
+            connectParticles();
+            drawCyberHUD();
+
+            requestAnimationFrame(animate);
+        }
+
+        // Listen for mousemove
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        // Listen for mouseout
+        window.addEventListener('mouseout', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        // Setup
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        animate();
+    }
+
+    // 7. Interactive Skills & Project Linkage Logic
+    const skillCards = document.querySelectorAll('.skill-card');
+    const timelineCards = document.querySelectorAll('.timeline-card');
+
+    if (skillCards.length > 0 && timelineCards.length > 0) {
+        skillCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const targetLessonsStr = card.getAttribute('data-lessons');
+                if (!targetLessonsStr) return;
+                
+                const targetLessons = targetLessonsStr.split(',').map(n => n.trim());
+                
+                timelineCards.forEach(tCard => {
+                    const lessonNum = tCard.getAttribute('data-lesson');
+                    if (targetLessons.includes(lessonNum)) {
+                        tCard.classList.add('highlighted');
+                        tCard.classList.remove('faded');
+                    } else {
+                        tCard.classList.add('faded');
+                        tCard.classList.remove('highlighted');
+                    }
+                });
+            });
+
+            card.addEventListener('mouseleave', () => {
+                timelineCards.forEach(tCard => {
+                    tCard.classList.remove('highlighted');
+                    tCard.classList.remove('faded');
+                });
+            });
+        });
+    }
 });

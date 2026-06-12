@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cao Doãn Lợi | Digital Portfolio cá nhân</title>
     <meta name="description" content="Digital Portfolio cá nhân của Cao Doãn Lợi - Sinh viên Khoa Công nghệ thông tin, Trường Đại học Công nghệ, ĐHQGHN cho môn Nhập môn Công nghệ số & Ứng dụng AI.">
-    <link rel="stylesheet" href="css/style.css?v=1.4">
-    <link rel="stylesheet" href="css/responsive.css?v=1.4">
+    <link rel="stylesheet" href="css/style.css?v=2.2">
+    <link rel="stylesheet" href="css/responsive.css?v=2.2">
     <style>
         /* Specific Styles for Index Page */
         .hero {
@@ -245,92 +245,181 @@
             color: var(--color-secondary);
         }
 
-        /* Learning Timeline */
+        /* Learning Journey 3-Phase Roadmap Styles */
         .timeline-section {
             padding: 80px 0;
         }
 
-        .timeline {
+        .phase-group {
+            margin-bottom: 48px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 32px;
             position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 0;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            width: 2px;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateX(-50%);
-        }
-
-        .timeline-item {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            margin-bottom: 40px;
-            position: relative;
-        }
-
-        .timeline-item:nth-child(even) {
-            flex-direction: row-reverse;
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: 50%;
-            top: 24px;
-            width: 16px;
-            height: 16px;
-            background: var(--bg-main);
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            transform: translateX(-50%);
-            z-index: 5;
             transition: var(--transition-smooth);
         }
 
-        .timeline-item:hover .timeline-dot {
-            border-color: var(--color-primary);
-            box-shadow: 0 0 10px var(--color-primary);
-            background: var(--color-primary);
+        body.light-theme .phase-group {
+            background: rgba(0, 0, 0, 0.015);
+            border-color: rgba(0, 0, 0, 0.04);
         }
 
-        .timeline-content {
-            width: 45%;
+        .phase-group-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 16px;
+        }
+
+        .phase-group-badge {
+            background: var(--color-primary-glow);
+            color: var(--color-primary);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 30px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .phase-group:nth-child(2) .phase-group-badge {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .phase-group:nth-child(3) .phase-group-badge {
+            background: var(--color-secondary-glow);
+            color: var(--color-secondary);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .phase-group-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.01em;
+        }
+
+        .phase-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .timeline-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            padding: 24px;
-            border-radius: 12px;
+            padding: 28px;
+            border-radius: 14px;
             position: relative;
             transition: var(--transition-smooth);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
-        .timeline-item:hover .timeline-content {
-            border-color: rgba(255, 255, 255, 0.15);
+        .timeline-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--color-primary);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+        
+        .phase-group:nth-child(2) .timeline-card::before {
+            background: #3b82f6;
+        }
+
+        .phase-group:nth-child(3) .timeline-card::before {
+            background: var(--color-secondary);
+        }
+
+        .timeline-card:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: var(--shadow-premium);
             transform: translateY(-4px);
         }
 
-        .timeline-date {
-            font-size: 13px;
+        body.light-theme .timeline-card:hover {
+            border-color: rgba(0, 0, 0, 0.12);
+        }
+
+        .timeline-card:hover::before {
+            opacity: 1;
+        }
+
+        .timeline-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .timeline-card-num {
+            font-family: var(--font-heading);
+            font-size: 24px;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.04);
+            line-height: 1;
+            transition: var(--transition-smooth);
+        }
+
+        .timeline-card:hover .timeline-card-num {
+            color: var(--color-primary-glow);
+        }
+        
+        .phase-group:nth-child(2) .timeline-card:hover .timeline-card-num {
+            color: rgba(59, 130, 246, 0.1);
+        }
+
+        .phase-group:nth-child(3) .timeline-card:hover .timeline-card-num {
+            color: var(--color-secondary-glow);
+        }
+
+        .timeline-card-title {
+            font-size: 17px;
+            margin-bottom: 10px;
+            color: var(--text-main);
             font-weight: 600;
-            color: var(--color-primary);
-            margin-bottom: 8px;
-            text-transform: uppercase;
+            line-height: 1.4;
         }
 
-        .timeline-title {
-            font-size: 18px;
-            margin-bottom: 8px;
-        }
-
-        .timeline-desc {
+        .timeline-card-desc {
             color: var(--text-muted);
             font-size: 14px;
+            line-height: 1.6;
+        }
+
+        body.light-theme .timeline-card-num {
+            color: rgba(0, 0, 0, 0.04);
+        }
+
+        body.light-theme .timeline-card:hover .timeline-card-num {
+            color: rgba(16, 185, 129, 0.15);
+        }
+        
+        body.light-theme .phase-group:nth-child(2) .timeline-card:hover .timeline-card-num {
+            color: rgba(59, 130, 246, 0.15);
+        }
+        
+        body.light-theme .phase-group:nth-child(3) .timeline-card:hover .timeline-card-num {
+            color: rgba(245, 158, 11, 0.15);
+        }
+
+        @media (max-width: 1024px) {
+            .phase-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -341,19 +430,14 @@
             .hero-name {
                 font-size: 40px;
             }
-            .timeline::before {
-                left: 16px;
+            .phase-group {
+                padding: 24px 20px;
+                margin-bottom: 32px;
             }
-            .timeline-item {
-                flex-direction: row !important;
-                margin-bottom: 30px;
-            }
-            .timeline-dot {
-                left: 16px;
-            }
-            .timeline-content {
-                width: calc(100% - 48px);
-                margin-left: 48px;
+            .phase-group-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
             }
         }
     </style>
@@ -365,6 +449,7 @@
     </script>
 </head>
 <body>
+    <canvas id="cyberCanvas"></canvas>
 
     <!-- Desktop Sidebar -->
     <aside class="sidebar">
@@ -522,73 +607,173 @@
             </div>
         </section>
 
-        <!-- Study Timeline Section -->
+        <!-- Interactive Skills Linkage Section -->
+        <section class="skills-linkage-section">
+            <div class="container">
+                <div class="section-header reveal" style="margin-bottom: 40px;">
+                    <span class="section-subtitle">Bản đồ liên kết</span>
+                    <h2 class="section-title">Kỹ năng Số & Công nghệ</h2>
+                    <p style="color: var(--text-muted); max-width: 600px; margin: 12px auto 0; font-size: 15px;">Di chuột vào từng thẻ kỹ năng dưới đây để xem kỹ năng đó được áp dụng vào những bài thực hành cụ thể nào trong lộ trình môn học.</p>
+                </div>
+                
+                <div class="skills-grid reveal">
+                    <!-- Skill 1 -->
+                    <div class="skill-card" data-lessons="1">
+                        <div class="skill-icon" style="color: var(--color-primary);">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                        </div>
+                        <h4 class="skill-title" style="margin: 12px 0 6px 0; font-size: 16px; font-weight: 600;">Quản lý & Tổ chức Tệp tin</h4>
+                        <p class="skill-desc" style="color: var(--text-muted); font-size: 13px; margin: 0; line-height: 1.4;">Tối ưu cấu trúc cây thư mục đa cấp, làm chủ quản lý dữ liệu trên Windows Explorer.</p>
+                    </div>
+
+                    <!-- Skill 2 -->
+                    <div class="skill-card" data-lessons="2">
+                        <div class="skill-icon" style="color: #3b82f6;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><path d="M8 11h6"></path></svg>
+                        </div>
+                        <h4 class="skill-title" style="margin: 12px 0 6px 0; font-size: 16px; font-weight: 600;">Nghiên cứu Học thuật</h4>
+                        <p class="skill-desc" style="color: var(--text-muted); font-size: 13px; margin: 0; line-height: 1.4;">Tra cứu tài liệu khoa học đáng tin cậy trên IEEE Xplore/ACM, tổng quan và đánh giá chéo.</p>
+                    </div>
+
+                    <!-- Skill 3 -->
+                    <div class="skill-card" data-lessons="3">
+                        <div class="skill-icon" style="color: var(--color-secondary);">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                        </div>
+                        <h4 class="skill-title" style="margin: 12px 0 6px 0; font-size: 16px; font-weight: 600;">Lập trình Python & Numpy</h4>
+                        <p class="skill-desc" style="color: var(--text-muted); font-size: 13px; margin: 0; line-height: 1.4;">Xây dựng script toán học mô phỏng biến đổi hình học không gian hai chiều R^2.</p>
+                    </div>
+
+                    <!-- Skill 4 -->
+                    <div class="skill-card" data-lessons="4">
+                        <div class="skill-icon" style="color: #a855f7;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        </div>
+                        <h4 class="skill-title" style="margin: 12px 0 6px 0; font-size: 16px; font-weight: 600;">Cộng tác Nhóm & Agile</h4>
+                        <p class="skill-desc" style="color: var(--text-muted); font-size: 13px; margin: 0; line-height: 1.4;">Vận hành nhóm cộng tác từ xa qua Discord, Trello quản lý tiến độ và Google Drive.</p>
+                    </div>
+
+                    <!-- Skill 5 -->
+                    <div class="skill-card" data-lessons="5">
+                        <div class="skill-icon" style="color: #ef4444;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                        </div>
+                        <h4 class="skill-title" style="margin: 12px 0 6px 0; font-size: 16px; font-weight: 600;">Lập trình hướng đối tượng Java</h4>
+                        <p class="skill-desc" style="color: var(--text-muted); font-size: 13px; margin: 0; line-height: 1.4;">Lý thuyết OOP, thiết kế hệ thống đấu giá số, phản biện Composition vs Inheritance.</p>
+                    </div>
+
+                    <!-- Skill 6 -->
+                    <div class="skill-card" data-lessons="3,5,6">
+                        <div class="skill-icon" style="color: #ec4899;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        </div>
+                        <h4 class="skill-title" style="margin: 12px 0 6px 0; font-size: 16px; font-weight: 600;">Kỹ nghệ Câu lệnh (Prompting)</h4>
+                        <p class="skill-desc" style="color: var(--text-muted); font-size: 13px; margin: 0; line-height: 1.4;">Ứng dụng tối ưu hóa ChatGPT/Gemini làm gia sư toán, gỡ lỗi code và sáng tạo.</p>
+                    </div>
+
+                    <!-- Skill 7 -->
+                    <div class="skill-card" data-lessons="6">
+                        <div class="skill-icon" style="color: #06b6d4;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        </div>
+                        <h4 class="skill-title" style="margin: 12px 0 6px 0; font-size: 16px; font-weight: 600;">Đạo đức AI & Liêm chính</h4>
+                        <p class="skill-desc" style="color: var(--text-muted); font-size: 13px; margin: 0; line-height: 1.4;">Xây dựng bộ quy tắc 6 Có - 6 Không sử dụng trí tuệ nhân tạo có đạo đức và trách nhiệm.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Study Timeline Grid Section -->
         <section class="timeline-section">
             <div class="container">
-                <div class="section-header reveal">
+                <div class="section-header reveal" style="margin-bottom: 48px;">
                     <span class="section-subtitle">Chặng đường đi qua</span>
                     <h2 class="section-title">Hành trình 6 Bài thực hành</h2>
                 </div>
                 
-                <div class="timeline reveal">
+                <div class="roadmap-phases reveal">
                     
-                    <!-- Item 1 -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-date">Bài 1</div>
-                            <h3 class="timeline-title">Thao tác Tệp tin & Thư mục</h3>
-                            <p class="timeline-desc">Thực hành các kỹ năng quản lý hệ thống tệp tin trên Windows File Explorer, tổ chức dữ liệu cá nhân tối ưu.</p>
+                    <!-- Phase 1 -->
+                    <div class="phase-group">
+                        <div class="phase-group-header">
+                            <span class="phase-group-badge">Giai đoạn 01</span>
+                            <h3 class="phase-group-title">Nền tảng Số & Kỹ năng Học thuật</h3>
+                        </div>
+                        <div class="phase-grid">
+                            <!-- Card 1 -->
+                            <div class="timeline-card" data-lesson="1">
+                                <div class="timeline-card-header">
+                                    <span class="timeline-card-num">01</span>
+                                    <span class="badge">Bài 1</span>
+                                </div>
+                                <h3 class="timeline-card-title">Thao tác Tệp tin & Thư mục</h3>
+                                <p class="timeline-card-desc">Thực hành các kỹ năng quản lý hệ thống tệp tin trên Windows File Explorer, tổ chức dữ liệu cá nhân tối ưu.</p>
+                            </div>
+                            <!-- Card 2 -->
+                            <div class="timeline-card" data-lesson="2">
+                                <div class="timeline-card-header">
+                                    <span class="timeline-card-num">02</span>
+                                    <span class="badge">Bài 2</span>
+                                </div>
+                                <h3 class="timeline-card-title">Tìm kiếm Học thuật</h3>
+                                <p class="timeline-card-desc">Xây dựng bộ từ khóa và rà soát 11 tài liệu uy tín (IEEE/ACM) về dự đoán lỗi phần mềm tự động bằng học sâu.</p>
+                            </div>
                         </div>
                     </div>
-                    
-                    <!-- Item 2 -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-date">Bài 2</div>
-                            <h3 class="timeline-title">Tìm kiếm Học thuật</h3>
-                            <p class="timeline-desc">Xây dựng bộ từ khóa và rà soát 11 tài liệu uy tín (IEEE/ACM) về dự đoán lỗi phần mềm tự động bằng học sâu.</p>
+
+                    <!-- Phase 2 -->
+                    <div class="phase-group">
+                        <div class="phase-group-header">
+                            <span class="phase-group-badge">Giai đoạn 02</span>
+                            <h3 class="phase-group-title">Lập trình & Cộng tác Dự án</h3>
+                        </div>
+                        <div class="phase-grid">
+                            <!-- Card 3 -->
+                            <div class="timeline-card" data-lesson="3">
+                                <div class="timeline-card-header">
+                                    <span class="timeline-card-num">03</span>
+                                    <span class="badge">Bài 3</span>
+                                </div>
+                                <h3 class="timeline-card-title">Lập trình cùng AI (Prompting)</h3>
+                                <p class="timeline-card-desc">Ứng dụng ChatGPT và Gemini thiết lập script Python mô phỏng phép biến đổi tuyến tính hình học không gian 2D.</p>
+                            </div>
+                            <!-- Card 4 -->
+                            <div class="timeline-card" data-lesson="4">
+                                <div class="timeline-card-header">
+                                    <span class="timeline-card-num">04</span>
+                                    <span class="badge">Bài 4</span>
+                                </div>
+                                <h3 class="timeline-card-title">Hợp tác Nhóm trực tuyến</h3>
+                                <p class="timeline-card-desc">Vận dụng Trello, Google Drive và Discord để thiết lập dự án nhóm, giải quyết các xung đột làm việc cộng tác.</p>
+                            </div>
                         </div>
                     </div>
-                    
-                    <!-- Item 3 -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-date">Bài 3</div>
-                            <h3 class="timeline-title">Lập trình cùng AI (Prompting)</h3>
-                            <p class="timeline-desc">Ứng dụng ChatGPT và Gemini thiết lập script Python mô phỏng phép biến đổi tuyến tính hình học không gian 2D.</p>
+
+                    <!-- Phase 3 -->
+                    <div class="phase-group">
+                        <div class="phase-group-header">
+                            <span class="phase-group-badge">Giai đoạn 03</span>
+                            <h3 class="phase-group-title">Sáng tạo Số & Đạo đức Công nghệ AI</h3>
                         </div>
-                    </div>
-                    
-                    <!-- Item 4 -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-date">Bài 4</div>
-                            <h3 class="timeline-title">Hợp tác Nhóm trực tuyến</h3>
-                            <p class="timeline-desc">Vận dụng Trello, Google Drive và Discord để thiết lập dự án nhóm, giải quyết các xung đột làm việc cộng tác.</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Item 5 -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-date">Bài 5</div>
-                            <h3 class="timeline-title">Sáng tạo nội dung với AI</h3>
-                            <p class="timeline-desc">Viết bài Tech Blog về cấu trúc Java OOP đấu giá trên Canva. Phản biện lỗi kế thừa sai lầm của AI (Composition vs Inheritance).</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Item 6 -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-date">Bài 6</div>
-                            <h3 class="timeline-title">Sử dụng AI có trách nhiệm</h3>
-                            <p class="timeline-desc">Nghiên cứu chính sách liêm chính học thuật, viết luận tác động của AI đến tự học và lập bộ nguyên tắc 6 Có - 6 Không.</p>
+                        <div class="phase-grid">
+                            <!-- Card 5 -->
+                            <div class="timeline-card" data-lesson="5">
+                                <div class="timeline-card-header">
+                                    <span class="timeline-card-num">05</span>
+                                    <span class="badge">Bài 5</span>
+                                </div>
+                                <h3 class="timeline-card-title">Sáng tạo nội dung với AI</h3>
+                                <p class="timeline-card-desc">Viết bài Tech Blog về cấu trúc Java OOP đấu giá trên Canva. Phản biện lỗi kế thừa sai lầm của AI (Composition vs Inheritance).</p>
+                            </div>
+                            <!-- Card 6 -->
+                            <div class="timeline-card" data-lesson="6">
+                                <div class="timeline-card-header">
+                                    <span class="timeline-card-num">06</span>
+                                    <span class="badge">Bài 6</span>
+                                </div>
+                                <h3 class="timeline-card-title">Sử dụng AI có trách nhiệm</h3>
+                                <p class="timeline-card-desc">Nghiên cứu chính sách liêm chính học thuật, viết luận tác động của AI đến tự học và lập bộ nguyên tắc 6 Có - 6 Không.</p>
+                            </div>
                         </div>
                     </div>
                     
@@ -618,6 +803,7 @@
                 <p>&copy; 2026 Cao Doãn Lợi (25020249). Lớp môn học VNU1001_E252015. All rights reserved.</p>
                 <div class="footer-socials">
                     <a href="mailto:25020249@vnu.edu.vn" class="social-icon" title="Email VNU"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a>
+                    <a href="mailto:loicao992@gmail.com" class="social-icon" title="Gmail cá nhân"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M22 7l-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg></a>
                     <a href="https://github.com/lloi-caoo" target="_blank" class="social-icon" title="Github"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
                 </div>
             </div>
@@ -625,7 +811,7 @@
     </footer>
     </div> <!-- .main-content -->
 
-    <script src="js/main.js?v=1.4"></script>
+    <script src="js/main.js?v=2.2"></script>
     <script>
         // Trigger reveal animation on load
         window.addEventListener('DOMContentLoaded', () => {
