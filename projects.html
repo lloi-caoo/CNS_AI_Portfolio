@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dự án & Bài tập thực hành | Cao Doãn Lợi</title>
     <meta name="description" content="Danh sách 6 bài tập thực hành môn Nhập môn Công nghệ số & Ứng dụng AI của sinh viên Cao Doãn Lợi. Xem tóm tắt quá trình, kết quả và tải file minh chứng.">
-    <link rel="stylesheet" href="css/style.css?v=2.2">
-    <link rel="stylesheet" href="css/responsive.css?v=2.2">
+    <link rel="stylesheet" href="css/style.css?v=2.3">
+    <link rel="stylesheet" href="css/responsive.css?v=2.3">
     <style>
         /* Specific Styles for Projects Page */
         .projects-header {
@@ -44,70 +44,286 @@
         }
 
         .project-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            overflow: hidden;
+            display: none;
+        }
+
+        /* Dashboard Layout */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 30px;
+            margin-top: 30px;
+            min-height: 580px;
+        }
+
+        @media (max-width: 992px) {
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sidebar & Navigation Tabs */
+        .dashboard-sidebar {
             display: flex;
             flex-direction: column;
+            gap: 14px;
+        }
+
+        .dashboard-tab {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.light-theme .dashboard-tab {
+            background: rgba(0, 0, 0, 0.01);
+        }
+
+        .dashboard-tab:hover {
+            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        body.light-theme .dashboard-tab:hover {
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        /* Category specific borders & glows for active tabs */
+        .dashboard-tab.active[data-category="tools"] {
+            border-color: #f59e0b;
+            background: rgba(245, 158, 11, 0.08);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.15);
+        }
+        .dashboard-tab.active[data-category="programming"] {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.08);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+        }
+        .dashboard-tab.active[data-category="ai-ethics"] {
+            border-color: #06b6d4;
+            background: rgba(6, 182, 212, 0.08);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.15);
+        }
+
+        /* Tab inside content */
+        .tab-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tab-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+            line-height: 1.4;
+            text-align: left;
+        }
+
+        /* Pulse Status Dot */
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10px;
+            font-family: monospace;
+            color: var(--text-muted);
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #10b981;
+            box-shadow: 0 0 8px #10b981;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.6; }
+            50% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 12px #10b981; }
+            100% { transform: scale(0.9); opacity: 0.6; }
+        }
+
+        /* Viewport Frame */
+        .dashboard-viewport {
+            background: rgba(15, 23, 42, 0.45); /* Glassmorphic */
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        body.light-theme .dashboard-viewport {
+            background: rgba(255, 255, 255, 0.65);
+        }
+
+        /* Project detail view layout */
+        .project-detail-view {
+            display: none;
+            grid-template-columns: 1.1fr 1.2fr;
+            gap: 32px;
             height: 100%;
-            transition: var(--transition-smooth);
         }
 
-        .project-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: var(--shadow-premium);
+        .project-detail-view.active {
+            display: grid;
+            animation: viewFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .project-img-box {
+        @media (max-width: 768px) {
+            .project-detail-view.active {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+        }
+
+        @keyframes viewFadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Viewport left preview side */
+        .viewport-preview-side {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .viewport-img-box {
             position: relative;
             width: 100%;
-            height: 200px;
+            aspect-ratio: 1.5;
+            border-radius: 12px;
             overflow: hidden;
-            border-bottom: 1px solid var(--border-color);
+            border: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.1);
         }
 
-        .project-img {
+        .viewport-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: var(--transition-smooth);
         }
 
-        .project-card:hover .project-img {
-            transform: scale(1.05);
+        /* Glowing Laser Scanline */
+        .viewport-img-box::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--laser-color, #10b981);
+            box-shadow: 0 0 8px var(--laser-color, #10b981);
+            animation: laserScan 4s linear infinite;
         }
 
-        .project-body {
-            padding: 24px;
+        @keyframes laserScan {
+            0% { top: 0%; }
+            50% { top: 100%; }
+            100% { top: 0%; }
+        }
+
+        /* Viewport right info side */
+        .viewport-info-side {
             display: flex;
             flex-direction: column;
-            flex-grow: 1;
+            text-align: left;
         }
 
-        .project-meta {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-        }
-
-        .project-title {
-            font-size: 20px;
-            margin-bottom: 12px;
+        .viewport-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 8px 0 14px;
             line-height: 1.3;
         }
 
-        .project-desc {
+        .viewport-desc {
             color: var(--text-muted);
-            font-size: 14.5px;
+            font-size: 14px;
+            line-height: 1.6;
             margin-bottom: 24px;
-            flex-grow: 1;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+        }
+
+        /* Specs table/grid */
+        .specs-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            border-top: 1px dashed var(--border-color);
+            padding-top: 16px;
+            margin-bottom: 24px;
+        }
+
+        .spec-item {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .spec-label {
+            font-family: monospace;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .spec-val {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .spec-val.verified {
+            color: #10b981;
+            font-weight: 600;
+            font-family: monospace;
+        }
+
+        /* Color configurations for specific categories inside detail view */
+        .project-detail-view[data-category="tools"] {
+            --laser-color: #f59e0b;
+        }
+        .project-detail-view[data-category="programming"] {
+            --laser-color: #10b981;
+        }
+        .project-detail-view[data-category="ai-ethics"] {
+            --laser-color: #06b6d4;
+        }
+
+        /* Tab active state badge colors */
+        .dashboard-tab[data-category="tools"] .badge {
+            background: rgba(245, 158, 11, 0.12);
+            color: #f59e0b;
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+        .dashboard-tab[data-category="programming"] .badge {
+            background: rgba(16, 185, 129, 0.12);
+            color: #10b981;
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+        .dashboard-tab[data-category="ai-ethics"] .badge {
+            background: rgba(6, 182, 212, 0.12);
+            color: #06b6d4;
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+        .dashboard-tab .badge.badge-secondary {
+            background: rgba(255, 255, 255, 0.03) !important;
+            color: var(--text-muted) !important;
+            border-color: var(--border-color) !important;
         }
 
         .project-actions {
@@ -226,120 +442,224 @@
                 </div>
 
                 <!-- Projects Grid -->
-                <div class="grid-3" id="projectsContainer">
+                <div class="dashboard-layout" id="projectsContainer">
                     
-                    <!-- Card 1 -->
-                    <div class="project-card" data-category="tools">
-                        <div class="project-img-box">
-                            <img src="assets/project-thumbnails/project1.png" alt="Thao tác tệp tin và thư mục" class="project-img">
-                        </div>
-                        <div class="project-body">
-                            <div class="project-meta">
+                    <!-- Left Sidebar tabs -->
+                    <div class="dashboard-sidebar">
+                        <div class="dashboard-tab active" data-project="1" data-category="tools">
+                            <div class="tab-header">
                                 <span class="badge">Bài 1</span>
-                                <span class="badge badge-secondary">Windows OS</span>
+                                <div class="status-indicator">
+                                    <span class="status-dot"></span>
+                                    <span class="status-text">[ACTIVE]</span>
+                                </div>
                             </div>
-                            <h2 class="project-title">Thao tác cơ bản với tệp tin và thư mục</h2>
-                            <p class="project-desc">Thực hiện các thao tác quản trị thư mục và tệp tin trên Windows File Explorer, tổ chức dữ liệu cá nhân chuyên nghiệp và khôi phục tệp từ Recycle Bin.</p>
-                            <div class="project-actions">
-                                <button class="btn btn-secondary btn-sm open-modal-btn" data-project="1">Xem chi tiết</button>
-                                <a href="BT%20Cần%20nộp/BaiTap1_25020249_CaoDoanLoi.pdf" target="_blank" class="btn btn-primary btn-sm">Tải File</a>
-                            </div>
+                            <h3 class="tab-title">Thao tác cơ bản với tệp tin và thư mục</h3>
                         </div>
-                    </div>
-                    
-                    <!-- Card 2 -->
-                    <div class="project-card" data-category="ai-ethics">
-                        <div class="project-img-box">
-                            <img src="assets/project-thumbnails/project2.png" alt="Tìm kiếm và đánh giá thông tin học thuật" class="project-img">
-                        </div>
-                        <div class="project-body">
-                            <div class="project-meta">
+                        
+                        <div class="dashboard-tab" data-project="2" data-category="ai-ethics">
+                            <div class="tab-header">
                                 <span class="badge">Bài 2</span>
-                                <span class="badge badge-secondary">Nghiên cứu</span>
+                                <div class="status-indicator">
+                                    <span class="status-dot"></span>
+                                    <span class="status-text">[ACTIVE]</span>
+                                </div>
                             </div>
-                            <h2 class="project-title">Tìm kiếm và đánh giá thông tin học thuật</h2>
-                            <p class="project-desc">Xây dựng bộ từ khóa tìm kiếm học thuật về "Dự đoán lỗi phần mềm bằng Học máy". Chọn lọc và đánh giá chi tiết độ tin cậy của 11 tài liệu uy tín thuộc IEEE và ACM.</p>
-                            <div class="project-actions">
-                                <button class="btn btn-secondary btn-sm open-modal-btn" data-project="2">Xem chi tiết</button>
-                                <a href="BT%20Cần%20nộp/Week3.4_Bai2_25020249_CaoDoanLoi.docx" target="_blank" class="btn btn-primary btn-sm">Tải File</a>
-                            </div>
+                            <h3 class="tab-title">Tìm kiếm và đánh giá thông tin học thuật</h3>
                         </div>
-                    </div>
-                    
-                    <!-- Card 3 -->
-                    <div class="project-card" data-category="programming">
-                        <div class="project-img-box">
-                            <img src="assets/project-thumbnails/project3.png" alt="Viết Prompt hiệu quả cho các tác vụ học tập" class="project-img">
-                        </div>
-                        <div class="project-body">
-                            <div class="project-meta">
+
+                        <div class="dashboard-tab" data-project="3" data-category="programming">
+                            <div class="tab-header">
                                 <span class="badge">Bài 3</span>
-                                <span class="badge badge-secondary">Python / AI</span>
+                                <div class="status-indicator">
+                                    <span class="status-dot"></span>
+                                    <span class="status-text">[ACTIVE]</span>
+                                </div>
                             </div>
-                            <h2 class="project-title">Viết Prompt hiệu quả cho các tác vụ học tập</h2>
-                            <p class="project-desc">Phối hợp cùng ChatGPT & Gemini viết script Python (NumPy + Matplotlib) để trực quan hóa phép biến đổi tuyến tính trong R2. Debug lỗi méo tỷ lệ khung hình đồ thị.</p>
-                            <div class="project-actions">
-                                <button class="btn btn-secondary btn-sm open-modal-btn" data-project="3">Xem chi tiết</button>
-                                <a href="BT%20Cần%20nộp/Week5_6_Bai3_25020249_CaoDoanLoi.docx" target="_blank" class="btn btn-primary btn-sm">Tải File</a>
-                            </div>
+                            <h3 class="tab-title">Viết Prompt hiệu quả cho các tác vụ học tập</h3>
                         </div>
-                    </div>
-                    
-                    <!-- Card 4 -->
-                    <div class="project-card" data-category="tools">
-                        <div class="project-img-box">
-                            <img src="assets/project-thumbnails/project4.png" alt="Sử dụng công cụ hợp tác trực tuyến cho dự án nhóm" class="project-img">
-                        </div>
-                        <div class="project-body">
-                            <div class="project-meta">
+
+                        <div class="dashboard-tab" data-project="4" data-category="tools">
+                            <div class="tab-header">
                                 <span class="badge">Bài 4</span>
-                                <span class="badge badge-secondary">Teamwork</span>
+                                <div class="status-indicator">
+                                    <span class="status-dot"></span>
+                                    <span class="status-text">[ACTIVE]</span>
+                                </div>
                             </div>
-                            <h2 class="project-title">Sử dụng công cụ hợp tác trực tuyến cho nhóm</h2>
-                            <p class="project-desc">Ứng dụng Trello, Google Drive và Discord để thiết lập dự án nhóm (Nhóm 9). Quản lý tài nguyên đa cấp khoa học và đưa ra giải pháp giải quyết xung đột nhóm.</p>
-                            <div class="project-actions">
-                                <button class="btn btn-secondary btn-sm open-modal-btn" data-project="4">Xem chi tiết</button>
-                                <a href="BT%20Cần%20nộp/Week7_8_Bai3_25020249_CaoDoanLoi.docx" target="_blank" class="btn btn-primary btn-sm">Tải File</a>
-                            </div>
+                            <h3 class="tab-title">Sử dụng công cụ hợp tác trực tuyến cho nhóm</h3>
                         </div>
-                    </div>
-                    
-                    <!-- Card 5 -->
-                    <div class="project-card" data-category="programming">
-                        <div class="project-img-box">
-                            <img src="assets/project-thumbnails/project5.png" alt="Sử dụng AI tạo sinh để hỗ trợ sáng tạo nội dung" class="project-img">
-                        </div>
-                        <div class="project-body">
-                            <div class="project-meta">
+
+                        <div class="dashboard-tab" data-project="5" data-category="programming">
+                            <div class="tab-header">
                                 <span class="badge">Bài 5</span>
-                                <span class="badge badge-secondary">Java OOP / AI</span>
+                                <div class="status-indicator">
+                                    <span class="status-dot"></span>
+                                    <span class="status-text">[ACTIVE]</span>
+                                </div>
                             </div>
-                            <h2 class="project-title">Sử dụng AI tạo sinh để hỗ tạo nội dung số</h2>
-                            <p class="project-desc">Sáng tác bài viết Blog kỹ thuật về Java OOP Đấu giá trên Canva Doc. Phản biện lỗi tư duy kiến trúc của AI và đề xuất Composition thay vì Inheritance.</p>
-                            <div class="project-actions">
-                                <button class="btn btn-secondary btn-sm open-modal-btn" data-project="5">Xem chi tiết</button>
-                                <a href="BT%20Cần%20nộp/Week9_10_Bai2_25020249_CaoDoanLoi.docx" target="_blank" class="btn btn-primary btn-sm">Tải File</a>
+                            <h3 class="tab-title">Sử dụng AI tạo sinh để hỗ tạo nội dung số</h3>
+                        </div>
+
+                        <div class="dashboard-tab" data-project="6" data-category="ai-ethics">
+                            <div class="tab-header">
+                                <span class="badge">Bài 6</span>
+                                <div class="status-indicator">
+                                    <span class="status-dot"></span>
+                                    <span class="status-text">[ACTIVE]</span>
+                                </div>
                             </div>
+                            <h3 class="tab-title">Sử dụng AI có trách nhiệm trong học tập</h3>
                         </div>
                     </div>
-                    
-                    <!-- Card 6 -->
-                    <div class="project-card" data-category="ai-ethics">
-                        <div class="project-img-box">
-                            <img src="assets/project-thumbnails/project6.png" alt="Sử dụng AI có trách nhiệm trong học tập và nghiên cứu" class="project-img">
-                        </div>
-                        <div class="project-body">
-                            <div class="project-meta">
-                                <span class="badge">Bài 6</span>
-                                <span class="badge badge-secondary">Liêm chính</span>
+
+                    <!-- Right Viewport -->
+                    <div class="dashboard-viewport">
+                        
+                        <!-- Viewport 1 -->
+                        <div class="project-detail-view active" data-project="1" data-category="tools">
+                            <div class="viewport-preview-side">
+                                <div class="viewport-img-box">
+                                    <img src="assets/project-thumbnails/project1.png" alt="Thao tác tệp tin và thư mục" class="viewport-img">
+                                </div>
+                                <div class="project-actions">
+                                    <button class="btn btn-secondary btn-sm open-modal-btn" data-project="1">Xem chi tiết</button>
+                                    <a href="BT%20Cần%20nộp/BaiTap1_25020249_CaoDoanLoi.pdf" target="_blank" class="btn btn-primary btn-sm">Tải File</a>
+                                </div>
                             </div>
-                            <h2 class="project-title">Sử dụng AI có trách nhiệm trong học tập</h2>
-                            <p class="project-desc">Nghiên cứu chính sách AI của trường Đại học, viết bài luận có AI hỗ trợ có trích dẫn APA rõ ràng, lập bộ nguyên tắc cá nhân "6 Không - 6 Có" khi dùng AI.</p>
-                            <div class="project-actions">
-                                <button class="btn btn-secondary btn-sm open-modal-btn" data-project="6">Xem chi tiết</button>
-                                <a href="BT%20Cần%20nộp/Week11_12_Bai4_25020249_CaoDoanLoi.docx" target="_blank" class="btn btn-primary btn-sm">Tải File</a>
+                            <div class="viewport-info-side">
+                                <span class="badge badge-secondary" style="align-self: flex-start;">Windows OS</span>
+                                <h2 class="viewport-title">Thao tác cơ bản với tệp tin và thư mục</h2>
+                                <p class="viewport-desc">Thực hiện các thao tác quản trị thư mục và tệp tin trên Windows File Explorer, tổ chức dữ liệu cá nhân chuyên nghiệp và khôi phục tệp từ Recycle Bin.</p>
+                                <div class="specs-grid">
+                                    <div class="spec-item"><span class="spec-label">SYSTEM_ENV:</span> <span class="spec-val">Windows 11 Explorer</span></div>
+                                    <div class="spec-item"><span class="spec-label">TECH_STACK:</span> <span class="spec-val">NTFS / File System</span></div>
+                                    <div class="spec-item"><span class="spec-label">CORE_SKILL:</span> <span class="spec-val">Data Organization & Backup</span></div>
+                                    <div class="spec-item"><span class="spec-label">STATUS:</span> <span class="spec-val verified">[VERIFIED_OK]</span></div>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- Viewport 2 -->
+                        <div class="project-detail-view" data-project="2" data-category="ai-ethics">
+                            <div class="viewport-preview-side">
+                                <div class="viewport-img-box">
+                                    <img src="assets/project-thumbnails/project2.png" alt="Tìm kiếm và đánh giá thông tin học thuật" class="viewport-img">
+                                </div>
+                                <div class="project-actions">
+                                    <button class="btn btn-secondary btn-sm open-modal-btn" data-project="2">Xem chi tiết</button>
+                                    <a href="BT%20Cần%20nộp/Week3.4_Bai2_25020249_CaoDoanLoi.docx" target="_blank" class="btn btn-primary btn-sm">Tải File</a>
+                                </div>
+                            </div>
+                            <div class="viewport-info-side">
+                                <span class="badge badge-secondary" style="align-self: flex-start;">Nghiên cứu</span>
+                                <h2 class="viewport-title">Tìm kiếm và đánh giá thông tin học thuật</h2>
+                                <p class="viewport-desc">Xây dựng bộ từ khóa tìm kiếm học thuật về "Dự đoán lỗi phần mềm bằng Học máy". Chọn lọc và đánh giá chi tiết độ tin cậy của 11 tài liệu uy tín thuộc IEEE và ACM.</p>
+                                <div class="specs-grid">
+                                    <div class="spec-item"><span class="spec-label">METHODOLOGY:</span> <span class="spec-val">Boolean Query Operators</span></div>
+                                    <div class="spec-item"><span class="spec-label">DATABASES:</span> <span class="spec-val">IEEE Xplore / ACM Digital Library</span></div>
+                                    <div class="spec-item"><span class="spec-label">STANDARDS:</span> <span class="spec-val">Peer-review criteria</span></div>
+                                    <div class="spec-item"><span class="spec-label">STATUS:</span> <span class="spec-val verified">[VERIFIED_OK]</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Viewport 3 -->
+                        <div class="project-detail-view" data-project="3" data-category="programming">
+                            <div class="viewport-preview-side">
+                                <div class="viewport-img-box">
+                                    <img src="assets/project-thumbnails/project3.png" alt="Viết Prompt hiệu quả cho các tác vụ học tập" class="viewport-img">
+                                </div>
+                                <div class="project-actions">
+                                    <button class="btn btn-secondary btn-sm open-modal-btn" data-project="3">Xem chi tiết</button>
+                                    <a href="BT%20Cần%20nộp/Week5_6_Bai3_25020249_CaoDoanLoi.docx" target="_blank" class="btn btn-primary btn-sm">Tải File</a>
+                                </div>
+                            </div>
+                            <div class="viewport-info-side">
+                                <span class="badge badge-secondary" style="align-self: flex-start;">Python / AI</span>
+                                <h2 class="viewport-title">Viết Prompt hiệu quả cho các tác vụ học tập</h2>
+                                <p class="viewport-desc">Phối hợp cùng ChatGPT & Gemini viết script Python (NumPy + Matplotlib) để trực quan hóa phép biến đổi tuyến tính trong R2. Debug lỗi méo tỷ lệ khung hình đồ thị.</p>
+                                <div class="specs-grid">
+                                    <div class="spec-item"><span class="spec-label">LANGUAGE:</span> <span class="spec-val">Python v3.10</span></div>
+                                    <div class="spec-item"><span class="spec-label">LIBRARIES:</span> <span class="spec-val">NumPy, Matplotlib</span></div>
+                                    <div class="spec-item"><span class="spec-label">PROMPT_ENG:</span> <span class="spec-val">Few-shot / Debug instruction</span></div>
+                                    <div class="spec-item"><span class="spec-label">STATUS:</span> <span class="spec-val verified">[VERIFIED_OK]</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Viewport 4 -->
+                        <div class="project-detail-view" data-project="4" data-category="tools">
+                            <div class="viewport-preview-side">
+                                <div class="viewport-img-box">
+                                    <img src="assets/project-thumbnails/project4.png" alt="Sử dụng công cụ hợp tác trực tuyến cho dự án nhóm" class="viewport-img">
+                                </div>
+                                <div class="project-actions">
+                                    <button class="btn btn-secondary btn-sm open-modal-btn" data-project="4">Xem chi tiết</button>
+                                    <a href="BT%20Cần%20nộp/Week7_8_Bai3_25020249_CaoDoanLoi.docx" target="_blank" class="btn btn-primary btn-sm">Tải File</a>
+                                </div>
+                            </div>
+                            <div class="viewport-info-side">
+                                <span class="badge badge-secondary" style="align-self: flex-start;">Teamwork</span>
+                                <h2 class="viewport-title">Sử dụng công cụ hợp tác trực tuyến cho nhóm</h2>
+                                <p class="viewport-desc">Ứng dụng Trello, Google Drive và Discord để thiết lập dự án nhóm (Nhóm 9). Quản lý tài nguyên đa cấp khoa học và đưa ra giải pháp giải quyết xung đột nhóm.</p>
+                                <div class="specs-grid">
+                                    <div class="spec-item"><span class="spec-label">PLATFORMS:</span> <span class="spec-val">Trello / Discord / Google Docs</span></div>
+                                    <div class="spec-item"><span class="spec-label">COOPERATION:</span> <span class="spec-val">Suggesting Mode / Ghim resources</span></div>
+                                    <div class="spec-item"><span class="spec-label">MANAGEMENT:</span> <span class="spec-val">Agile Kanban / Multi-level folders</span></div>
+                                    <div class="spec-item"><span class="spec-label">STATUS:</span> <span class="spec-val verified">[VERIFIED_OK]</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Viewport 5 -->
+                        <div class="project-detail-view" data-project="5" data-category="programming">
+                            <div class="viewport-preview-side">
+                                <div class="viewport-img-box">
+                                    <img src="assets/project-thumbnails/project5.png" alt="Sử dụng AI tạo sinh để hỗ trợ sáng tạo nội dung" class="viewport-img">
+                                </div>
+                                <div class="project-actions">
+                                    <button class="btn btn-secondary btn-sm open-modal-btn" data-project="5">Xem chi tiết</button>
+                                    <a href="BT%20Cần%20nộp/Week9_10_Bai2_25020249_CaoDoanLoi.docx" target="_blank" class="btn btn-primary btn-sm">Tải File</a>
+                                </div>
+                            </div>
+                            <div class="viewport-info-side">
+                                <span class="badge badge-secondary" style="align-self: flex-start;">Java OOP / AI</span>
+                                <h2 class="viewport-title">Sử dụng AI tạo sinh để hỗ tạo nội dung số</h2>
+                                <p class="viewport-desc">Sáng tác bài viết Blog kỹ thuật về Java OOP Đấu giá trên Canva Doc. Phản biện lỗi tư duy kiến trúc của AI và đề xuất Composition thay vì Inheritance.</p>
+                                <div class="specs-grid">
+                                    <div class="spec-item"><span class="spec-label">LANGUAGE:</span> <span class="spec-val">Java (JDK 17)</span></div>
+                                    <div class="spec-item"><span class="spec-label">ARCH_PATTERN:</span> <span class="spec-val">Composition over Inheritance</span></div>
+                                    <div class="spec-item"><span class="spec-label">GEN_AI:</span> <span class="spec-val">Google Gemini / Microsoft Designer</span></div>
+                                    <div class="spec-item"><span class="spec-label">STATUS:</span> <span class="spec-val verified">[VERIFIED_OK]</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Viewport 6 -->
+                        <div class="project-detail-view" data-project="6" data-category="ai-ethics">
+                            <div class="viewport-preview-side">
+                                <div class="viewport-img-box">
+                                    <img src="assets/project-thumbnails/project6.png" alt="Sử dụng AI có trách nhiệm trong học tập và nghiên cứu" class="viewport-img">
+                                </div>
+                                <div class="project-actions">
+                                    <button class="btn btn-secondary btn-sm open-modal-btn" data-project="6">Xem chi tiết</button>
+                                    <a href="BT%20Cần%20nộp/Week11_12_Bai4_25020249_CaoDoanLoi.docx" target="_blank" class="btn btn-primary btn-sm">Tải File</a>
+                                </div>
+                            </div>
+                            <div class="viewport-info-side">
+                                <span class="badge badge-secondary" style="align-self: flex-start;">Liêm chính</span>
+                                <h2 class="viewport-title">Sử dụng AI có trách nhiệm trong học tập</h2>
+                                <p class="viewport-desc">Nghiên cứu chính sách AI của trường Đại học, viết bài luận có AI hỗ trợ có trích dẫn APA rõ ràng, lập bộ nguyên tắc cá nhân "6 Không - 6 Có" khi dùng AI.</p>
+                                <div class="specs-grid">
+                                    <div class="spec-item"><span class="spec-label">POLICY:</span> <span class="spec-val">VNU Academic Integrity Policy</span></div>
+                                    <div class="spec-item"><span class="spec-label">ETHICS_RULE:</span> <span class="spec-val">"6 Do's and 6 Don'ts" Code</span></div>
+                                    <div class="spec-item"><span class="spec-label">CITATIONS:</span> <span class="spec-val">APA Style (OpenAI, 2026)</span></div>
+                                    <div class="spec-item"><span class="spec-label">STATUS:</span> <span class="spec-val verified">[VERIFIED_OK]</span></div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
@@ -526,13 +846,75 @@
         </div>
     </div>
 
-    <script src="js/main.js?v=2.2"></script>
+    <script src="js/main.js?v=2.4"></script>
     <script>
         // Trigger reveal animation on load
         window.addEventListener('DOMContentLoaded', () => {
             const reveals = document.querySelectorAll('.reveal');
             reveals.forEach(el => el.classList.add('active'));
+
+            initDashboardController();
         });
+
+        function initDashboardController() {
+            const tabs = document.querySelectorAll('.dashboard-tab');
+            const views = document.querySelectorAll('.project-detail-view');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+
+            // Tab click handling
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const projectId = tab.getAttribute('data-project');
+                    activateProject(projectId);
+                });
+            });
+
+            function activateProject(projectId) {
+                // Deactivate all tabs & views
+                tabs.forEach(t => t.classList.remove('active'));
+                views.forEach(v => v.classList.remove('active'));
+
+                // Activate matching tab & view
+                const targetTab = document.querySelector(`.dashboard-tab[data-project="${projectId}"]`);
+                const targetView = document.querySelector(`.project-detail-view[data-project="${projectId}"]`);
+                
+                if (targetTab && targetView) {
+                    targetTab.classList.add('active');
+                    targetView.classList.add('active');
+                }
+            }
+
+            // Custom category filter integration
+            if (filterBtns.length > 0) {
+                filterBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        // Toggle active class on buttons
+                        filterBtns.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+
+                        const filterValue = btn.getAttribute('data-filter');
+                        let firstVisibleProject = null;
+
+                        tabs.forEach(tab => {
+                            const tabCategory = tab.getAttribute('data-category');
+                            if (filterValue === 'all' || tabCategory === filterValue) {
+                                tab.style.display = 'flex';
+                                if (!firstVisibleProject) {
+                                    firstVisibleProject = tab.getAttribute('data-project');
+                                }
+                            } else {
+                                tab.style.display = 'none';
+                            }
+                        });
+
+                        // Automatically activate the first visible project in the filtered list
+                        if (firstVisibleProject) {
+                            activateProject(firstVisibleProject);
+                        }
+                    });
+                });
+            }
+        }
     </script>
 </body>
 </html>

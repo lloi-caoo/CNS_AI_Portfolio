@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tổng kết & Đánh giá | Cao Doãn Lợi</title>
     <meta name="description" content="Trang tổng kết quá trình học tập, những kiến thức, kỹ năng đạt được, khó khăn và cách khắc phục cùng định hướng phát triển tương lai của Cao Doãn Lợi.">
-    <link rel="stylesheet" href="css/style.css?v=2.2">
-    <link rel="stylesheet" href="css/responsive.css?v=2.2">
+    <link rel="stylesheet" href="css/style.css?v=2.3">
+    <link rel="stylesheet" href="css/responsive.css?v=2.3">
     <style>
         /* Specific Styles for Reflection Page */
         .reflection-header {
@@ -97,96 +97,129 @@
             background: linear-gradient(95deg, var(--color-secondary) 0%, #fbbf24 100%);
         }
 
-        /* Grid specific */
-        .challenge-grid {
+        /* Problem-Solution Matrix Styles */
+        .matrix-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .matrix-row {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr 1fr;
             gap: 24px;
-            margin-top: 20px;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+            padding-bottom: 20px;
         }
 
-        .challenge-box {
+        body.light-theme .matrix-row {
+            border-bottom-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .matrix-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .matrix-cell {
+            padding: 24px;
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: var(--transition-smooth);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        .matrix-problem {
+            background: rgba(239, 68, 68, 0.015);
+            border: 1px solid rgba(239, 68, 68, 0.12);
+        }
+
+        .matrix-solution {
+            background: rgba(16, 185, 129, 0.015);
+            border: 1px solid rgba(16, 185, 129, 0.12);
+        }
+
+        .matrix-problem:hover {
+            border-color: rgba(239, 68, 68, 0.3);
             background: rgba(239, 68, 68, 0.03);
-            border: 1px solid rgba(239, 68, 68, 0.15);
-            padding: 24px;
-            border-radius: 12px;
+            transform: translateY(-2px);
         }
 
-        .solution-box {
+        .matrix-solution:hover {
+            border-color: rgba(16, 185, 129, 0.3);
             background: rgba(16, 185, 129, 0.03);
-            border: 1px solid rgba(16, 185, 129, 0.15);
-            padding: 24px;
-            border-radius: 12px;
+            transform: translateY(-2px);
         }
 
-        .box-title {
-            font-size: 16px;
-            font-weight: 600;
+        .matrix-cell-title {
+            font-size: 15px;
+            font-weight: 700;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            letter-spacing: -0.01em;
+            text-transform: uppercase;
         }
 
-        .challenge-box .box-title {
-            color: #ef4444;
+        .matrix-problem .matrix-cell-title {
+            color: #f87171;
         }
 
-        .solution-box .box-title {
+        body.light-theme .matrix-problem .matrix-cell-title {
+            color: #dc2626;
+        }
+
+        .matrix-solution .matrix-cell-title {
             color: var(--color-primary);
         }
 
-        /* Timeline future */
-        .future-list {
-            list-style: none;
-        }
-
-        .future-item {
-            position: relative;
-            padding-left: 32px;
-            margin-bottom: 24px;
-        }
-
-        .future-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 6px;
-            width: 12px;
-            height: 12px;
-            background: var(--bg-main);
-            border: 3px solid var(--color-primary);
-            border-radius: 50%;
-        }
-
-        .future-item::after {
-            content: '';
-            position: absolute;
-            left: 5px;
-            top: 24px;
-            width: 2px;
-            height: calc(100% - 6px);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .future-item:last-child::after {
-            display: none;
-        }
-
-        .future-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .future-desc {
+        .matrix-cell-desc {
+            font-size: 14px;
+            line-height: 1.6;
             color: var(--text-muted);
-            font-size: 14.5px;
+            margin: 0;
         }
 
-        @media (max-width: 768px) {
-            .challenge-grid {
+        /* Timeline future tags */
+        .timeline-tag {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-left: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .tag-short {
+            background: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .tag-medium {
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .tag-long {
+            background: var(--color-primary-glow);
+            color: var(--color-primary);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        @media (max-width: 992px) {
+            .matrix-row {
                 grid-template-columns: 1fr;
+                gap: 16px;
             }
         }
     </style>
@@ -293,7 +326,7 @@
                         <div class="card-icon">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                         </div>
-                        <h2 class="card-title">Kiến thức tích lũy & Kỹ năng đạt được</h2>
+                        <h2 class="card-title">I. Kiến thức tích lũy & Tự đánh giá kỹ năng</h2>
                     </div>
                     <p style="color: var(--text-muted); margin-bottom: 24px;">
                         Thông qua việc thực hiện nghiêm túc 6 bài tập lớn trong học phần này, tôi đã hệ thống hóa và làm chủ được một lượng kiến thức và kỹ năng số vô cùng quan trọng:
@@ -303,120 +336,97 @@
                         <div>
                             <h3 style="font-size: 18px; margin-bottom: 16px; color: var(--color-primary);">Kiến thức cốt lõi</h3>
                             <ul class="objective-list">
-                                <li><strong>Hệ thống quản trị file:</strong> Nắm vững cách quản trị tệp tin, phân cấp và cấu trúc bảo mật lưu trữ hệ điều hành.</li>
-                                <li><strong>Học thuật số:</strong> Nắm vững cách tìm kiếm nâng cao (toán tử Boolean), cách đánh giá chất lượng tài liệu khoa học theo chuẩn Peer-review.</li>
-                                <li><strong>Tương tác AI:</strong> Hiểu rõ cơ chế hoạt động của Mô hình ngôn ngữ lớn (LLMs), kỹ thuật Prompt Engineering cơ bản.</li>
-                                <li><strong>Liêm chính học thuật:</strong> Nắm bắt các quy tắc sử dụng AI có trách nhiệm và chính sách bản quyền học thuật của trường.</li>
+                                <li><strong>Nền tảng hệ thống:</strong> Nắm vững cách quản trị tệp tin, phân cấp và cấu trúc bảo mật dữ liệu lưu trữ trên hệ điều hành Windows.</li>
+                                <li><strong>Nghiên cứu học thuật:</strong> Nắm vững cách xây dựng bộ từ khóa tìm kiếm (toán tử Boolean), cách đánh giá chất lượng và độ tin cậy của tài liệu khoa học theo chuẩn Peer-review (IEEE, ACM).</li>
+                                <li><strong>Ứng dụng AI thực tiễn:</strong> Hiểu rõ cơ chế hoạt động của các mô hình ngôn ngữ lớn (LLMs), tối ưu hóa kỹ năng Prompt Engineering trong tạo mã và gỡ lỗi.</li>
+                                <li><strong>Đạo đức & Liêm chính:</strong> Nhận thức sâu sắc chính sách liêm chính học thuật và xây dựng bộ quy tắc ứng xử có trách nhiệm khi sử dụng AI trong học tập.</li>
                             </ul>
                         </div>
-                        <div class="skills-container">
-                            <h3 style="font-size: 18px; margin-bottom: 16px; color: var(--color-secondary);">Mức độ tự đánh giá Kỹ năng</h3>
-                            
-                            <div class="skill-item">
-                                <div class="skill-info"><span>Kỹ năng Quản lý Tệp & Thư mục (Bài 1)</span><span>90%</span></div>
-                                <div class="skill-bar-bg"><div class="skill-bar" data-width="90%"></div></div>
-                            </div>
-                            
-                            <div class="skill-item">
-                                <div class="skill-info"><span>Tìm kiếm & Đánh giá Học thuật (Bài 2)</span><span>85%</span></div>
-                                <div class="skill-bar-bg"><div class="skill-bar" data-width="85%"></div></div>
-                            </div>
-                            
-                            <div class="skill-item">
-                                <div class="skill-info"><span>Lập trình Python & Kỹ thuật Prompt (Bài 3)</span><span>90%</span></div>
-                                <div class="skill-bar-bg"><div class="skill-bar" data-width="90%"></div></div>
-                            </div>
-                            
-                            <div class="skill-item">
-                                <div class="skill-info"><span>Làm việc nhóm & Quản lý Dự án (Bài 4)</span><span>80%</span></div>
-                                <div class="skill-bar-bg"><div class="skill-bar" data-width="80%"></div></div>
-                            </div>
-
-                            <div class="skill-item">
-                                <div class="skill-info"><span>Sáng tạo Nội dung & Java OOP (Bài 5)</span><span>88%</span></div>
-                                <div class="skill-bar-bg"><div class="skill-bar" data-width="88%"></div></div>
+                        <div class="radar-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;">
+                            <h3 style="font-size: 18px; margin-bottom: 16px; color: var(--color-secondary); align-self: flex-start;">Mức độ tự đánh giá Kỹ năng</h3>
+                            <div class="radar-canvas-wrapper" style="position: relative; width: 100%; max-width: 360px; aspect-ratio: 1; margin: 0 auto;">
+                                <canvas id="skillsRadarCanvas" style="width: 100%; height: 100%; display: block;"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Card 2: Trải nghiệm & Thách thức -->
+                          <!-- Card 2: Trải nghiệm & Thách thức -->
                 <div class="reflection-card">
                     <div class="card-icon-title">
                         <div class="card-icon">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                         </div>
-                        <h2 class="card-title">Trải nghiệm thực tế, Khó khăn & Khắc phục</h2>
+                        <h2 class="card-title">II. Ma trận đối chiếu: Vấn đề & Biện pháp khắc phục</h2>
                     </div>
-                    <p style="color: var(--text-muted);">
+                    <p style="color: var(--text-muted); margin-bottom: 24px;">
                         Quá trình hoàn thành bài tập dự án này không chỉ đơn thuần là gõ code mà là một trải nghiệm thực tế quý giá với nhiều thử thách bất ngờ, đòi hỏi tư duy giải quyết vấn đề độc lập:
                     </p>
                     
-                    <div class="challenge-grid">
-                        <!-- Challenge 1 -->
-                        <div class="challenge-box">
-                            <div class="box-title">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                                Khó khăn: Đồ thị Python bị méo tỉ lệ (Bài 3)
+                    <div class="matrix-container">
+                        <!-- Row 1 -->
+                        <div class="matrix-row">
+                            <div class="matrix-cell matrix-problem">
+                                <div class="matrix-cell-title">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                    Vấn đề 1: Đồ thị Python bị méo tỉ lệ (Bài 3)
+                                </div>
+                                <p class="matrix-cell-desc">
+                                    Khi chạy thử đoạn mã vẽ đồ thị lưới tọa độ sau phép biến đổi tuyến tính do ChatGPT sinh ra, hình vuông bị méo thành hình chữ nhật do tỉ lệ khung hình mặc định của thư viện Matplotlib.
+                                </p>
                             </div>
-                            <p style="font-size: 14px; color: var(--text-muted);">
-                                Khi chạy thử đoạn mã vẽ đồ thị lưới tọa độ sau phép biến đổi tuyến tính do ChatGPT sinh ra, hình vuông bị méo thành hình chữ nhật do tỉ lệ khung hình mặc định của thư viện Matplotlib.
-                            </p>
-                        </div>
-                        
-                        <!-- Solution 1 -->
-                        <div class="solution-box">
-                            <div class="box-title">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                Khắc phục: Sử dụng AI để học hàm thư viện
+                            <div class="matrix-cell matrix-solution">
+                                <div class="matrix-cell-title">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    Biện pháp: Sử dụng AI để học hàm thư viện
+                                </div>
+                                <p class="matrix-cell-desc">
+                                    Tôi đã viết một Prompt hẹp để hỏi AI giải pháp cố định tỉ lệ khung hình. AI đã hướng dẫn thêm câu lệnh `plt.gca().set_aspect('equal')`, giải quyết triệt để lỗi và giữ đồ thị chuẩn xác.
+                                </p>
                             </div>
-                            <p style="font-size: 14px; color: var(--text-muted);">
-                                Thay vì mất hàng giờ đọc tài liệu, tôi đã viết một Prompt hẹp để hỏi AI giải pháp cố định tỉ lệ khung hình. AI đã cung cấp câu lệnh `plt.gca().set_aspect('equal')` giải quyết triệt để lỗi.
-                            </p>
-                        </div>
-
-                        <!-- Challenge 2 -->
-                        <div class="challenge-box">
-                            <div class="box-title">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                                Khó khăn: AI đề xuất thiết kế sai kiến trúc Java (Bài 5)
-                            </div>
-                            <p style="font-size: 14px; color: var(--text-muted);">
-                                Trong bài toán thiết kế Class OOP Đấu giá, Google Gemini đề xuất để Class `Auction` kế thừa (`extends`) từ Class `Entity`. Đây là lỗi tư duy nghiêm trọng (vi phạm Domain-Driven Design).
-                            </p>
-                        </div>
-                        
-                        <!-- Solution 2 -->
-                        <div class="solution-box">
-                            <div class="box-title">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                Khắc phục: Phản biện & Sử dụng Composition
-                            </div>
-                            <p style="font-size: 14px; color: var(--text-muted);">
-                                Tôi đã chủ động bác bỏ code của AI, viết lại phần phân tích cấu trúc sử dụng quan hệ chứa trong (Composition) thay vì kế thừa (Inheritance). Điều này chứng minh tư duy kỹ thuật độc lập lớn hơn 50%.
-                            </p>
                         </div>
 
-                        <!-- Challenge 3 -->
-                        <div class="challenge-box">
-                            <div class="box-title">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                                Khó khăn: Xung đột chỉnh sửa & Quá tải kênh chat (Bài 4)
+                        <!-- Row 2 -->
+                        <div class="matrix-row">
+                            <div class="matrix-cell matrix-problem">
+                                <div class="matrix-cell-title">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                    Vấn đề 2: AI đề xuất sai kiến trúc Java (Bài 5)
+                                </div>
+                                <p class="matrix-cell-desc">
+                                    Trong bài toán thiết kế Class OOP Đấu giá, Google Gemini đề xuất để Class `Auction` kế thừa (`extends`) từ Class `Entity`. Đây là lỗi thiết kế hệ thống nghiêm trọng (vi phạm Domain-Driven Design).
+                                </p>
                             </div>
-                            <p style="font-size: 14px; color: var(--text-muted);">
-                                Khi làm việc nhóm trực tuyến trên Google Docs, các thành viên hay ghi đè ý tưởng của nhau. Các link tài liệu quan trọng trên Discord cũng nhanh chóng bị trôi mất.
-                            </p>
+                            <div class="matrix-cell matrix-solution">
+                                <div class="matrix-cell-title">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    Biện pháp: Phản biện & Sử dụng Composition
+                                </div>
+                                <p class="matrix-cell-desc">
+                                    Tôi đã chủ động bác bỏ mã nguồn của AI, tự tay viết lại phần phân tích cấu trúc sử dụng quan hệ chứa trong (Composition) thay vì kế thừa (Inheritance), chứng minh tư duy kỹ thuật độc lập lớn hơn 50%.
+                                </p>
+                            </div>
                         </div>
-                        
-                        <!-- Solution 3 -->
-                        <div class="solution-box">
-                            <div class="box-title">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                Khắc phục: Thiết lập bộ quy tắc làm việc nhóm
+
+                        <!-- Row 3 -->
+                        <div class="matrix-row">
+                            <div class="matrix-cell matrix-problem">
+                                <div class="matrix-cell-title">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                    Vấn đề 3: Xung đột tài liệu & trôi tin nhắn (Bài 4)
+                                </div>
+                                <p class="matrix-cell-desc">
+                                    Khi làm việc nhóm trực tuyến trên Google Docs, các thành viên hay ghi đè ý tưởng của nhau. Đồng thời, các link tài liệu quan trọng trên Discord nhanh chóng bị trôi mất.
+                                </p>
                             </div>
-                            <p style="font-size: 14px; color: var(--text-muted);">
-                                Tôi đề xuất bật chế độ "Suggesting" thay vì "Editing" trên Docs. Đồng thời, tôi chủ động lập các channels Discord chuyên biệt và ghim các tin nhắn chốt quyết định để tránh trôi thông tin.
-                            </p>
+                            <div class="matrix-cell matrix-solution">
+                                <div class="matrix-cell-title">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    Biện pháp: Thiết lập bộ quy tắc làm việc nhóm
+                                </div>
+                                <p class="matrix-cell-desc">
+                                    Tôi đề xuất bật chế độ "Suggesting" thay vì "Editing" trên Docs. Đồng thời, tôi chủ động quy hoạch các channels Discord chuyên biệt và ghim các tin nhắn chốt quyết định để dễ dàng tra cứu.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -427,7 +437,7 @@
                         <div class="card-icon">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                         </div>
-                        <h2 class="card-title">Định hướng Phát triển trong Tương lai</h2>
+                        <h2 class="card-title">III. Lộ trình phát triển & Định hướng tương lai</h2>
                     </div>
                     <p style="color: var(--text-muted); margin-bottom: 24px;">
                         Môn học Nhập môn Công nghệ số & Ứng dụng AI mới chỉ là bước khởi đầu. Để chuẩn bị tốt cho sự nghiệp của một Kỹ sư Phần mềm tương lai, tôi tự đặt ra cho mình lộ trình phát triển tiếp theo:
@@ -435,17 +445,26 @@
                     
                     <div class="future-list">
                         <div class="future-item">
-                            <div class="future-title">1. Nghiên cứu sâu về Machine Learning và Học sâu (Deep Learning)</div>
+                            <div class="future-title">
+                                1. Nghiên cứu sâu về Machine Learning và Học sâu (Deep Learning)
+                                <span class="timeline-tag tag-short">Học kỳ tới</span>
+                            </div>
                             <div class="future-desc">Dựa trên kết quả bài tập 2 về "Ứng dụng Học máy trong Dự đoán lỗi phần mềm", tôi định hướng sẽ tự học nâng cao toán học (Đại số tuyến tính, Xác suất thống kê) để tự cài đặt các thuật toán dự đoán lỗi.</div>
                         </div>
                         
                         <div class="future-item">
-                            <div class="future-title">2. Làm chủ Kỹ nghệ Prompt (Advanced Prompt Engineering)</div>
+                            <div class="future-title">
+                                2. Làm chủ Kỹ nghệ Prompt (Advanced Prompt Engineering)
+                                <span class="timeline-tag tag-medium">Trung hạn</span>
+                            </div>
                             <div class="future-desc">Không dừng lại ở các prompt trò chuyện thông thường, tôi sẽ nghiên cứu các kỹ thuật prompt nâng cao như Few-shot prompting, Chain-of-Thought để tích hợp AI vào môi trường phát triển (IDE) tối ưu quy trình debug mã nguồn.</div>
                         </div>
                         
                         <div class="future-item">
-                            <div class="future-title">3. Áp dụng nghiêm ngặt bộ nguyên tắc liêm chính học thuật</div>
+                            <div class="future-title">
+                                3. Áp dụng nghiêm ngặt bộ nguyên tắc liêm chính học thuật
+                                <span class="timeline-tag tag-long">Bền vững / Dài hạn</span>
+                            </div>
                             <div class="future-desc">Mọi sản phẩm nghiên cứu, viết code của tôi sau này luôn tuân thủ nguyên tắc "6 Không - 6 Có" đã tự thiết lập ở bài tập 6, đảm bảo sự phát triển bản thân bền vững dựa trên thực chất của tư duy sáng tạo.</div>
                         </div>
                     </div>
@@ -483,22 +502,287 @@
     </footer>
     </div> <!-- .main-content -->
 
-    <script src="js/main.js?v=2.2"></script>
+    <script src="js/main.js?v=2.4"></script>
     <script>
-        // Trigger reveal animation and skill bar animation
+        // Trigger reveal animation
         window.addEventListener('DOMContentLoaded', () => {
             const reveals = document.querySelectorAll('.reveal');
             reveals.forEach(el => el.classList.add('active'));
             
-            // Skill bar width trigger
-            setTimeout(() => {
-                const skillBars = document.querySelectorAll('.skill-bar');
-                skillBars.forEach(bar => {
-                    const width = bar.getAttribute('data-width');
-                    bar.style.width = width;
-                });
-            }, 300);
+            initRadarChart();
         });
+
+        function initRadarChart() {
+            const canvas = document.getElementById('skillsRadarCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            const skills = [
+                { label: "Bài 1", desc: "Quản lý tệp", val: 0.90 },
+                { label: "Bài 2", desc: "Nghiên cứu", val: 0.85 },
+                { label: "Bài 3", desc: "Python & AI", val: 0.90 },
+                { label: "Bài 4", desc: "Làm việc nhóm", val: 0.80 },
+                { label: "Bài 5", desc: "Java & OOP", val: 0.88 },
+                { label: "Bài 6", desc: "Đạo đức AI", val: 0.95 }
+            ];
+
+            let width = 0;
+            let height = 0;
+            let centerX = 0;
+            let centerY = 0;
+            let radius = 0;
+
+            let progress = 0;
+            let mouseX = 0;
+            let mouseY = 0;
+            let isHovering = false;
+            let activeIndex = -1;
+
+            function easeOutCubic(t) {
+                return 1 - Math.pow(1 - t, 3);
+            }
+
+            function resize() {
+                const rect = canvas.getBoundingClientRect();
+                const dpr = window.devicePixelRatio || 1;
+                
+                width = rect.width || 360;
+                height = rect.height || 360;
+
+                canvas.width = width * dpr;
+                canvas.height = height * dpr;
+                
+                ctx.resetTransform();
+                ctx.scale(dpr, dpr);
+
+                centerX = width / 2;
+                centerY = height / 2;
+                radius = Math.min(width, height) * 0.32;
+            }
+
+            resize();
+            window.addEventListener('resize', resize);
+
+            canvas.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                mouseX = e.clientX - rect.left;
+                mouseY = e.clientY - rect.top;
+                isHovering = true;
+
+                let foundIndex = -1;
+                const currentEase = easeOutCubic(progress);
+
+                for (let i = 0; i < skills.length; i++) {
+                    const angle = i * Math.PI / 3 - Math.PI / 2;
+                    const r = radius * skills[i].val * currentEase;
+                    const vx = centerX + Math.cos(angle) * r;
+                    const vy = centerY + Math.sin(angle) * r;
+
+                    const dx = mouseX - vx;
+                    const dy = mouseY - vy;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 15) {
+                        foundIndex = i;
+                        break;
+                    }
+                }
+                activeIndex = foundIndex;
+            });
+
+            canvas.addEventListener('mouseleave', () => {
+                isHovering = false;
+                activeIndex = -1;
+            });
+
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+
+                const isLight = document.documentElement.classList.contains('light-theme') || document.body.classList.contains('light-theme');
+
+                // Color tokens synchronized with theme
+                const gridColor = isLight ? 'rgba(16, 185, 129, 0.15)' : 'rgba(16, 185, 129, 0.2)';
+                const axisColor = isLight ? 'rgba(16, 185, 129, 0.25)' : 'rgba(16, 185, 129, 0.3)';
+                const textColor = isLight ? '#1f2937' : '#94a3b8';
+                const textLabelColor = isLight ? '#047857' : '#34d399';
+                const polyFillColor = isLight ? 'rgba(16, 185, 129, 0.15)' : 'rgba(16, 185, 129, 0.22)';
+                const polyStrokeColor = '#10b981';
+
+                const currentEase = easeOutCubic(progress);
+
+                // 1. Draw Concentric Hexagonal Grid (5 Levels: 20%, 40%, 60%, 80%, 100%)
+                ctx.strokeStyle = gridColor;
+                ctx.lineWidth = 1;
+                for (let j = 1; j <= 5; j++) {
+                    const r = radius * (j / 5);
+                    ctx.beginPath();
+                    for (let i = 0; i < 6; i++) {
+                        const angle = i * Math.PI / 3 - Math.PI / 2;
+                        const x = centerX + Math.cos(angle) * r;
+                        const y = centerY + Math.sin(angle) * r;
+                        if (i === 0) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    }
+                    ctx.closePath();
+                    ctx.stroke();
+
+                    // Scale markers on the vertical axis (angle = -PI/2)
+                    ctx.font = '8px monospace';
+                    ctx.fillStyle = isLight ? 'rgba(16, 185, 129, 0.4)' : 'rgba(16, 185, 129, 0.5)';
+                    ctx.textAlign = 'left';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(`${j * 20}%`, centerX + 4, centerY - r);
+                }
+
+                // 2. Draw 6 Axis Lines
+                ctx.strokeStyle = axisColor;
+                ctx.lineWidth = 1;
+                for (let i = 0; i < 6; i++) {
+                    const angle = i * Math.PI / 3 - Math.PI / 2;
+                    const x = centerX + Math.cos(angle) * radius;
+                    const y = centerY + Math.sin(angle) * radius;
+                    ctx.beginPath();
+                    ctx.moveTo(centerX, centerY);
+                    ctx.lineTo(x, y);
+                    ctx.stroke();
+                }
+
+                // 3. Draw Axis Labels
+                for (let i = 0; i < 6; i++) {
+                    const angle = i * Math.PI / 3 - Math.PI / 2;
+                    const labelDist = radius + 22;
+                    const lx = centerX + Math.cos(angle) * labelDist;
+                    const ly = centerY + Math.sin(angle) * labelDist;
+
+                    const cos = Math.cos(angle);
+                    const sin = Math.sin(angle);
+
+                    if (Math.abs(cos) < 0.1) {
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = sin < 0 ? 'bottom' : 'top';
+                    } else {
+                        ctx.textAlign = cos > 0 ? 'left' : 'right';
+                        ctx.textBaseline = 'middle';
+                    }
+
+                    // Draw main label (e.g., "Bài 1")
+                    ctx.font = 'bold 11px Inter, sans-serif';
+                    ctx.fillStyle = textLabelColor;
+                    ctx.fillText(skills[i].label, lx, ly - 6);
+
+                    // Draw description label (e.g., "Quản lý tệp")
+                    ctx.font = '9px Inter, sans-serif';
+                    ctx.fillStyle = textColor;
+                    ctx.fillText(skills[i].desc, lx, ly + 6);
+                }
+
+                // 4. Draw Data Polygon Area
+                ctx.beginPath();
+                for (let i = 0; i < 6; i++) {
+                    const angle = i * Math.PI / 3 - Math.PI / 2;
+                    const r = radius * skills[i].val * currentEase;
+                    const x = centerX + Math.cos(angle) * r;
+                    const y = centerY + Math.sin(angle) * r;
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.closePath();
+                ctx.fillStyle = polyFillColor;
+                ctx.fill();
+
+                // Draw polygon border
+                ctx.save();
+                if (!isLight) {
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = '#10b981';
+                }
+                ctx.strokeStyle = polyStrokeColor;
+                ctx.lineWidth = 2.5;
+                ctx.stroke();
+                ctx.restore();
+
+                // 5. Draw Data Dots
+                for (let i = 0; i < 6; i++) {
+                    const angle = i * Math.PI / 3 - Math.PI / 2;
+                    const r = radius * skills[i].val * currentEase;
+                    const x = centerX + Math.cos(angle) * r;
+                    const y = centerY + Math.sin(angle) * r;
+
+                    ctx.beginPath();
+                    ctx.arc(x, y, 4, 0, Math.PI * 2);
+                    ctx.fillStyle = isLight ? '#ffffff' : '#0a0f1d';
+                    ctx.strokeStyle = '#10b981';
+                    ctx.lineWidth = 2;
+                    ctx.fill();
+                    ctx.stroke();
+                }
+
+                // 6. Draw Hover Highlight and Tooltip
+                if (activeIndex >= 0 && activeIndex < 6) {
+                    const i = activeIndex;
+                    const angle = i * Math.PI / 3 - Math.PI / 2;
+                    const r = radius * skills[i].val * currentEase;
+                    const x = centerX + Math.cos(angle) * r;
+                    const y = centerY + Math.sin(angle) * r;
+
+                    // Draw outer highlight dot
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(x, y, 8, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(16, 185, 129, 0.3)';
+                    ctx.strokeStyle = '#10b981';
+                    ctx.lineWidth = 1.5;
+                    ctx.fill();
+                    ctx.stroke();
+                    ctx.restore();
+
+                    // Draw Tooltip Bubble
+                    const tooltipText = `[${Math.round(skills[i].val * 100)}%]`;
+                    ctx.font = 'bold 10px monospace';
+                    const textWidth = ctx.measureText(tooltipText).width;
+                    const padX = 6;
+                    const padY = 4;
+                    const tw = textWidth + padX * 2;
+                    const th = 14 + padY * 2;
+
+                    const tx = x;
+                    const ty = y - 18;
+
+                    ctx.save();
+                    ctx.shadowBlur = 6;
+                    ctx.shadowColor = 'rgba(0,0,0,0.35)';
+                    ctx.fillStyle = isLight ? '#1f2937' : '#064e3b';
+                    ctx.strokeStyle = '#10b981';
+                    ctx.lineWidth = 1;
+
+                    ctx.beginPath();
+                    if (ctx.roundRect) {
+                        ctx.roundRect(tx - tw / 2, ty - th / 2, tw, th, 4);
+                    } else {
+                        ctx.rect(tx - tw / 2, ty - th / 2, tw, th);
+                    }
+                    ctx.fill();
+                    ctx.stroke();
+                    ctx.restore();
+
+                    ctx.fillStyle = '#34d399';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(tooltipText, tx, ty);
+                }
+            }
+
+            function animate() {
+                if (progress < 1) {
+                    progress += 0.018;
+                    if (progress > 1) progress = 1;
+                }
+                draw();
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+        }
     </script>
 </body>
 </html>
